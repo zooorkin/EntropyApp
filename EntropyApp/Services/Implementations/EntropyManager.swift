@@ -126,6 +126,10 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         delegate?.entropyManagerDidGetInformationFromSource("roll: \(roll)\npitch: \(pitch)\nyaw: \(yaw)")
     }
     
+    func sourceCoreMotionDidChangeRawValues(x: Double, y: Double, z: Double) {
+        delegate?.entropyManagerDidGetInformationFromSource("x: \(x)\ny: \(y)\nz: \(z)")
+    }
+    
     func sourceCoreMotionDidGetRandomNumber(_ value: UInt32) {
         
     }

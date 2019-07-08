@@ -26,10 +26,12 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
         self.entropyManager = entropyManager
         self.source = source
         self.entropyManager.delegate = self
+        print("Сервис \(source) запускается...")
         entropyManager.start(source: source)
     }
     
     deinit {
+        print("Сервис \(source) останавливается...")
         entropyManager.stop(source: source)
     }
     
