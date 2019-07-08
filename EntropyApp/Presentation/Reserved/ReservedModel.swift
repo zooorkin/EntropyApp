@@ -25,5 +25,13 @@ class ReservedModel: IReservedModel, IEntropyManagerDelegate {
         self.entropyManager = entropyManager
         self.entropyManager.delegate = self
     }
+    
+    func entropyManagerDidGetInformationFromSource(_ text: String) {
+        
+    }
+    
+    func entropyManagerDidGetRandomNumber(_ value: UInt32) {
+        
+    }
 
 }

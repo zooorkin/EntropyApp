@@ -17,7 +17,7 @@ protocol IPresentationAssembly {
 
     func entropySourcesListViewController() -> EntropySourcesListViewController
 
-    func entropySourceViewController() -> EntropySourceViewController
+    func entropySourceViewController(source: SourceEntropy) -> EntropySourceViewController
 
     func aboutViewController() -> AboutViewController
 

@@ -9,7 +9,8 @@
 protocol IEntropySourcesListModel {
     var delegate: IEntropySourcesListModelDelegate? { get set }
     var numberOfRows: Int {get}
-    func name(ofSource: Int) -> String
+    func sourceEntropyName(at index: Int) -> String
+    func sourceEntropy(at index: Int) -> SourceEntropy
 }
 
 protocol IEntropySourcesListModelDelegate: class {
@@ -29,11 +30,27 @@ class EntropySourcesListModel: IEntropySourcesListModel, IEntropyManagerDelegate
     var numberOfRows: Int {
         return entropyManager.numberOfEntropySources
     }
-    func name(ofSource index: Int) -> String{
+    
+    func sourceEntropyName(at index: Int) -> String {
         if (index >= 0 && index < numberOfRows){
-            return entropyManager.entropyList[index]
+            return entropyManager.sourceEntropyName(at: index)
         }
         fatalError("Неправильный индекс")
+    }
+    
+    func sourceEntropy(at index: Int) -> SourceEntropy {
+        if (index >= 0 && index < numberOfRows){
+            return entropyManager.sourceEntropy(at: index)
+        }
+        fatalError("Неправильный индекс")
+    }
+    
+    func entropyManagerDidGetInformationFromSource(_ text: String) {
+        
+    }
+    
+    func entropyManagerDidGetRandomNumber(_ value: UInt32) {
+        
     }
     
 }

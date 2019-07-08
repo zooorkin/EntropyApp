@@ -30,5 +30,13 @@ class AboutViewController: UIViewController, IAboutModelDelegate {
         super.viewDidLoad()
         model.delegate = self
     }
+    
+    func entropyManagerDidGetInformationFromSource(text: String) {
+        
+    }
+    
+    func entropyManagerDidGetRandomNumber(value: UInt32) {
+        
+    }
 
 }

@@ -28,9 +28,9 @@ class PresentationAssembly: IPresentationAssembly {
         return EntropySourcesListViewController(presentationAssembly: self, model: model)
     }
 
-    func entropySourceViewController() -> EntropySourceViewController {
+    func entropySourceViewController(source: SourceEntropy) -> EntropySourceViewController {
         let entropyManager = servicesAssembly.entropyManager
-        let model = EntropySourceModel(entropyManager: entropyManager)
+        let model = EntropySourceModel(entropyManager: entropyManager, source: source)
         return EntropySourceViewController(presentationAssembly: self, model: model)
     }
 

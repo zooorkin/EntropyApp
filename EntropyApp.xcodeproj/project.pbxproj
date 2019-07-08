@@ -177,12 +177,12 @@
 			isa = PBXGroup;
 			children = (
 				883D201922D3B861006C56FB /* SourceFoundation.swift */,
-				883D201A22D3B861006C56FB /* SourceReserved.swift */,
 				883D201B22D3B861006C56FB /* SourceDispatch.swift */,
 				883D201C22D3B861006C56FB /* SourceUIKit.swift */,
 				883D201D22D3B861006C56FB /* SourceCoreLocation.swift */,
 				883D201E22D3B861006C56FB /* SourceCoreMotion.swift */,
 				883D201F22D3B861006C56FB /* SourceAVFoundation.swift */,
+				883D201A22D3B861006C56FB /* SourceReserved.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -190,9 +190,9 @@
 		883D202122D3B861006C56FB /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				883D202A22D3B861006C56FB /* Assembly */,
 				883D202222D3B861006C56FB /* EntropySourcesList */,
 				883D202622D3B861006C56FB /* EntropySource */,
-				883D202A22D3B861006C56FB /* Assembly */,
 				883D202D22D3B861006C56FB /* Reserved */,
 				883D203122D3B861006C56FB /* About */,
 			);
@@ -510,6 +510,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 68427LK7H9;
 				INFOPLIST_FILE = EntropyApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -528,6 +529,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 68427LK7H9;
 				INFOPLIST_FILE = EntropyApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

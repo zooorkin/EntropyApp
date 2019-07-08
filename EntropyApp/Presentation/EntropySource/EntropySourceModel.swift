@@ -12,18 +12,33 @@ protocol IEntropySourceModel {
 }
 
 protocol IEntropySourceModelDelegate: class {
-
+    func entropySourceModelDidGetInformationFromSource(_ text: String)
+    func entropySourceModelDidGetRandomNumber(_ value: UInt32)
 }
 
 class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
 
     weak var delegate: IEntropySourceModelDelegate?
     private var entropyManager: IEntropyManager
+    private let source: SourceEntropy
 
-
-    init(entropyManager: IEntropyManager) {
+    init(entropyManager: IEntropyManager, source: SourceEntropy) {
         self.entropyManager = entropyManager
+        self.source = source
         self.entropyManager.delegate = self
+        entropyManager.start(source: source)
+    }
+    
+    deinit {
+        entropyManager.stop(source: source)
+    }
+    
+    func entropyManagerDidGetInformationFromSource(_ text: String) {
+        delegate?.entropySourceModelDidGetInformationFromSource(text)
+    }
+    
+    func entropyManagerDidGetRandomNumber(_ value: UInt32) {
+        delegate?.entropySourceModelDidGetRandomNumber(value)
     }
 
 }

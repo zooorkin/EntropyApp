@@ -10,6 +10,8 @@ import UIKit
 
 class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate {
 
+    @IBOutlet weak var informationLabel: UILabel!
+    
     private let presentationAssembly: IPresentationAssembly
 
     private var model: IEntropySourceModel
@@ -29,6 +31,14 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         model.delegate = self
+    }
+    
+    func entropySourceModelDidGetInformationFromSource(_ text: String) {
+        informationLabel.text = text
+    }
+    
+    func entropySourceModelDidGetRandomNumber(_ value: UInt32) {
+        
     }
 
 }
