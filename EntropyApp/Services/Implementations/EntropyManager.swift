@@ -9,6 +9,8 @@
 protocol IEntropyManager {
 
     var delegate: IEntropyManagerDelegate? {get set}
+    var entropyList: [String] {get}
+    var numberOfEntropySources: Int {get}
 }
 
 
@@ -35,6 +37,12 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
 
     private var sourceReserved: ISourceReserved
 
+    
+    var entropyList: [String]
+    var numberOfEntropySources: Int {
+        return entropyList.count
+    }
+    
 
     init(sourceFoundation: ISourceFoundation, sourceUIKit: ISourceUIKit, sourceCoreLocation: ISourceCoreLocation, sourceCoreMotion: ISourceCoreMotion, sourceAVFoundation: ISourceAVFoundation, sourceDispatch: ISourceDispatch, sourceReserved: ISourceReserved) {
         self.sourceFoundation = sourceFoundation
@@ -44,6 +52,7 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         self.sourceAVFoundation = sourceAVFoundation
         self.sourceDispatch = sourceDispatch
         self.sourceReserved = sourceReserved
+        self.entropyList = ["Время", "Прикосновение", "Географическое местоположение", "Положение в пространстве", "Акселерометр", "Гироскоп", "Магнитометр", "Микрофон", "Камера", "Многопоточность"]
         self.sourceFoundation.delegate = self
         self.sourceUIKit.delegate = self
         self.sourceCoreLocation.delegate = self
