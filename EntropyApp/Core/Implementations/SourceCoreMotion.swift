@@ -30,9 +30,15 @@ protocol ISourceCoreMotion {
 
 
 protocol ISourceCoreMotionDelegate: class {
-    func sourceCoreMotionDidChangeRawValues(roll: Double, pitch: Double, yaw: Double)
     func sourceCoreMotionDidChangeRawValues(x: Double, y: Double, z: Double)
     func sourceCoreMotionDidGetRandomNumber(_ value: UInt32)
+    func sourceCoreMotionDidGetRandomNumber(_ value: UInt16)
+    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt32,
+                                             _ secondValue: UInt32,
+                                             _ thirdValue: UInt32)
+    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt16,
+                                             _ secondValue: UInt16,
+                                             _ thirdValue: UInt16)
 }
 
 import CoreMotion
@@ -56,7 +62,6 @@ class SourceCoreMotion: ISourceCoreMotion {
             self.timer = Timer(fire: Date(), interval: (1.0 / 60.0), repeats: true,
                                block: { (timer) in
                                 self.sendMotionData()
-                                self.printMotionData()
             })
             RunLoop.current.add(self.timer!, forMode: RunLoop.Mode.default)
         }
@@ -77,7 +82,6 @@ class SourceCoreMotion: ISourceCoreMotion {
             self.timer = Timer(fire: Date(), interval: (1.0/60.0), repeats: true,
                                             block: { (timer) in
                                                 self.sendAccelerometerData()
-                                                self.printAccelerometerData()
             })
             RunLoop.current.add(self.timer!, forMode: RunLoop.Mode.default)
         }
@@ -96,7 +100,6 @@ class SourceCoreMotion: ISourceCoreMotion {
             self.timer = Timer(fire: Date(), interval: (1.0/60.0), repeats: true,
                                    block: { (timer) in
                                     self.sendGyroscopeData()
-                                    self.printGyroscopeData()
             })
             RunLoop.current.add(self.timer!, forMode: RunLoop.Mode.default)
         }
@@ -109,36 +112,13 @@ class SourceCoreMotion: ISourceCoreMotion {
         timer = nil
     }
     
-    func sendGyroscopeData() {
-        if let data = self.motion.gyroData {
-            let x = data.rotationRate.x
-            let y = data.rotationRate.y
-            let z = data.rotationRate.z
-            delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
-        }
-    }
-    
-    func printGyroscopeData() {
-        if let data = self.motion.gyroData {
-            let x = data.rotationRate.x
-            let y = data.rotationRate.y
-            let z = data.rotationRate.z
-            print("Gyroscope")
-            print(".rotationRate.x: \(x)")
-            print(".rotationRate.y: \(y)")
-            print(".rotationRate.z: \(z)")
-            print()
-        }
-    }
-
     func startMagnitometer() {
         if motion.isMagnetometerAvailable {
             self.motion.magnetometerUpdateInterval = 1.0 / 60.0
             self.motion.startMagnetometerUpdates()
             self.timer = Timer(fire: Date(), interval: (1.0/60.0), repeats: true,
-                                           block: { (timer) in
-                                            self.sendMagnitometerData()
-                                            self.printMagnitometerData()
+                               block: { (timer) in
+                                self.sendMagnitometerData()
             })
             RunLoop.current.add(self.timer!, forMode: RunLoop.Mode.default)
         }
@@ -150,25 +130,33 @@ class SourceCoreMotion: ISourceCoreMotion {
         timer = nil
     }
     
+    func sendGyroscopeData() {
+        if let data = self.motion.gyroData {
+            let x = data.rotationRate.x
+            let y = data.rotationRate.y
+            let z = data.rotationRate.z
+            delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast32(),
+                                                          y.getLast32(),
+                                                          z.getLast32())
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          y.getLast16(),
+                                                          z.getLast16())
+        }
+    }
+    
     private func sendMagnitometerData() {
         if let data = self.motion.magnetometerData {
             let x = data.magneticField.x
             let y = data.magneticField.y
             let z = data.magneticField.z
             delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
-        }
-    }
-    
-    private func printMagnitometerData() {
-        if let data = self.motion.magnetometerData {
-            let x = data.magneticField.x
-            let y = data.magneticField.y
-            let z = data.magneticField.z
-            print("Magnetometer")
-            print(".magneticField.x: \(x)")
-            print(".magneticField.y: \(y)")
-            print(".magneticField.z: \(z)")
-            print()
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast32(),
+                                                          y.getLast32(),
+                                                          z.getLast32())
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          y.getLast16(),
+                                                          z.getLast16())
         }
     }
     
@@ -178,18 +166,14 @@ class SourceCoreMotion: ISourceCoreMotion {
             let y = data.acceleration.y
             let z = data.acceleration.z
             delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
-        }
-    }
-    
-    private func printAccelerometerData() {
-        if let data = self.motion.accelerometerData {
-            let x = data.acceleration.x
-            let y = data.acceleration.y
-            let z = data.acceleration.z
-            print("Accelerometer")
-            print(".acceleration.x: \(x)")
-            print(".acceleration.y: \(y)")
-            print(".acceleration.z: \(z)")
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getFirst32(),
+                                                          y.getFirst32(),
+                                                          z.getFirst32())
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          y.getLast16(),
+                                                          z.getLast16())
+            print("\(x.getLast32())")
+            print("\(x.getFirst32())")
             print()
         }
     }
@@ -199,22 +183,14 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.attitude.roll
             let y = data.attitude.pitch
             let z = data.attitude.yaw
-            delegate?.sourceCoreMotionDidChangeRawValues(roll: x, pitch: y, yaw: z)
+            delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getFirst32(),
+                                                          y.getFirst32(),
+                                                          z.getFirst32())
+            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          y.getLast16(),
+                                                          z.getLast16())
         }
     }
-    
-    func printMotionData(){
-        if let data = self.motion.deviceMotion {
-            let x = data.attitude.roll
-            let y = data.attitude.pitch
-            let z = data.attitude.yaw
-            print("Motion")
-            print(".attitude.roll: \(x)")
-            print(".attitude.pitch: \(y)")
-            print(".attitude.yaw: \(z)")
-            print()
-        }
-    }
-    
     
 }

@@ -53,4 +53,24 @@ class EntropySourcesListModel: IEntropySourcesListModel, IEntropyManagerDelegate
         
     }
     
+    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt32, _ secondValue: UInt32, _ thirdValue: UInt32) {
+        
+    }
+    
+    func entropyManagerDidGetRandomNumber(_ value: UInt16) {
+        
+    }
+    
+    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt16, _ secondValue: UInt16, _ thirdValue: UInt16) {
+        
+    }
+    
+    func entropyManagerDidGetRawValues(x: Double, y: Double, z: Double) {
+        
+    }
+    
+    func entropyManagerDidGetRawValue(_ value: Double) {
+        
+    }
+
 }

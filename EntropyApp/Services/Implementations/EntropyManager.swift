@@ -16,10 +16,23 @@ protocol IEntropyManager {
     func stop(source: SourceEntropy)
 }
 
-
 protocol IEntropyManagerDelegate: class {
+    
     func entropyManagerDidGetInformationFromSource(_ text: String)
+    // Сырые значения
+    func entropyManagerDidGetRawValue(_ value: Double)
+    func entropyManagerDidGetRawValues(x: Double, y: Double, z: Double)
+    
+    // Случайные числа (32 бита)
     func entropyManagerDidGetRandomNumber(_ value: UInt32)
+    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt32,
+                                           _ secondValue: UInt32,
+                                           _ thirdValue: UInt32)
+    // Случайные числа (16 бит)
+    func entropyManagerDidGetRandomNumber(_ value: UInt16)
+    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt16,
+                                           _ secondValue: UInt16,
+                                           _ thirdValue: UInt16)
 }
 
 
@@ -122,16 +135,24 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         self.sourceReserved.delegate = self
     }
     
-    func sourceCoreMotionDidChangeRawValues(roll: Double, pitch: Double, yaw: Double) {
-        delegate?.entropyManagerDidGetInformationFromSource("roll: \(roll)\npitch: \(pitch)\nyaw: \(yaw)")
-    }
-    
     func sourceCoreMotionDidChangeRawValues(x: Double, y: Double, z: Double) {
-        delegate?.entropyManagerDidGetInformationFromSource("x: \(x)\ny: \(y)\nz: \(z)")
+        delegate?.entropyManagerDidGetRawValues(x: x, y: y, z: z)
     }
     
     func sourceCoreMotionDidGetRandomNumber(_ value: UInt32) {
-        
+        delegate?.entropyManagerDidGetRandomNumber(value)
+    }
+    
+    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt32, _ secondValue: UInt32, _ thirdValue: UInt32) {
+        delegate?.entropyManagerDidGetRandomNumbers(firstValue, secondValue, thirdValue)
+    }
+    
+    func sourceCoreMotionDidGetRandomNumber(_ value: UInt16) {
+        delegate?.entropyManagerDidGetRandomNumber(value)
+    }
+    
+    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt16, _ secondValue: UInt16, _ thirdValue: UInt16) {
+        delegate?.entropyManagerDidGetRandomNumbers(firstValue, secondValue, thirdValue)
     }
 
 }

@@ -40,5 +40,30 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     func entropySourceModelDidGetRandomNumber(_ value: UInt32) {
         
     }
+    
+    func entropySourceModelDidGetRandomNumbers(_ firstValue: UInt32, _ secondValue: UInt32, _ thirdValue: UInt32) {
+        //informationLabel.text = "\(firstValue)\n\(secondValue)\n\(thirdValue)\n\n"
+    }
+    
+    func entropySourceModelDidGetRandomNumber(_ value: UInt16) {
+        
+    }
+    
+    func entropySourceModelDidGetRandomNumbers(_ firstValue: UInt16, _ secondValue: UInt16, _ thirdValue: UInt16) {
+        //informationLabel.text = "\(firstValue)\n\(secondValue)\n\(thirdValue)\n\n"
+    }
+    
+    func entropySourceModelDidGetRawValues(x: Double, y: Double, z: Double) {
+        var binary = ""
+        var raw = ""
+        for (index, i) in [x, y, z].enumerated(){
+            let prolog = "Значение #\(index)  "
+            let epilog = "\n"
+            binary += prolog + i.getStringRepresentation() + epilog
+            raw += prolog + "\(i)" + epilog
+        }
+        informationLabel.text = binary + "\n" + raw
+    }
+
 
 }
