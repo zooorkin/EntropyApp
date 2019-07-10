@@ -30,7 +30,6 @@
 		883D204522D3B862006C56FB /* EntropySourcesListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202522D3B861006C56FB /* EntropySourcesListModel.swift */; };
 		883D204622D3B862006C56FB /* EntropySourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202722D3B861006C56FB /* EntropySourceModel.swift */; };
 		883D204722D3B862006C56FB /* EntropySourceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883D202822D3B861006C56FB /* EntropySourceViewController.xib */; };
-		883D204822D3B862006C56FB /* EntropySourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202922D3B861006C56FB /* EntropySourceViewController.swift */; };
 		883D204922D3B862006C56FB /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202B22D3B861006C56FB /* IPresentationAssembly.swift */; };
 		883D204A22D3B862006C56FB /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202C22D3B861006C56FB /* PresentationAssembly.swift */; };
 		883D204E22D3B862006C56FB /* AboutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D203222D3B861006C56FB /* AboutModel.swift */; };
@@ -43,6 +42,8 @@
 		8870CD3322D60925008D3F37 /* ReservedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883D203022D3B861006C56FB /* ReservedViewController.xib */; };
 		8870CD3422D60930008D3F37 /* ReservedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202E22D3B861006C56FB /* ReservedViewController.swift */; };
 		8870CD3522D60930008D3F37 /* ReservedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202F22D3B861006C56FB /* ReservedModel.swift */; };
+		8870CD3A22D65ABE008D3F37 /* TouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8870CD3922D65ABE008D3F37 /* TouchView.swift */; };
+		8870CD3C22D65C25008D3F37 /* EntropySourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8870CD3B22D65C25008D3F37 /* EntropySourceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,7 +72,6 @@
 		883D202522D3B861006C56FB /* EntropySourcesListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntropySourcesListModel.swift; sourceTree = "<group>"; };
 		883D202722D3B861006C56FB /* EntropySourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntropySourceModel.swift; sourceTree = "<group>"; };
 		883D202822D3B861006C56FB /* EntropySourceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntropySourceViewController.xib; sourceTree = "<group>"; };
-		883D202922D3B861006C56FB /* EntropySourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntropySourceViewController.swift; sourceTree = "<group>"; };
 		883D202B22D3B861006C56FB /* IPresentationAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		883D202C22D3B861006C56FB /* PresentationAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		883D202E22D3B861006C56FB /* ReservedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservedViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +84,8 @@
 		883D205322D3B98D006C56FB /* EntropyListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntropyListCell.xib; sourceTree = "<group>"; };
 		883D205422D3B98D006C56FB /* EntropyListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntropyListCell.swift; sourceTree = "<group>"; };
 		883D205922D5EF38006C56FB /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		8870CD3922D65ABE008D3F37 /* TouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchView.swift; sourceTree = "<group>"; };
+		8870CD3B22D65C25008D3F37 /* EntropySourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntropySourceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,9 +218,10 @@
 		883D202622D3B861006C56FB /* EntropySource */ = {
 			isa = PBXGroup;
 			children = (
+				8870CD3922D65ABE008D3F37 /* TouchView.swift */,
+				8870CD3B22D65C25008D3F37 /* EntropySourceViewController.swift */,
 				883D202722D3B861006C56FB /* EntropySourceModel.swift */,
 				883D202822D3B861006C56FB /* EntropySourceViewController.xib */,
-				883D202922D3B861006C56FB /* EntropySourceViewController.swift */,
 			);
 			path = EntropySource;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				883D204422D3B862006C56FB /* EntropySourcesListViewController.swift in Sources */,
 				883D203E22D3B862006C56FB /* SourceUIKit.swift in Sources */,
 				883D204A22D3B862006C56FB /* PresentationAssembly.swift in Sources */,
+				8870CD3C22D65C25008D3F37 /* EntropySourceViewController.swift in Sources */,
 				8870CD3422D60930008D3F37 /* ReservedViewController.swift in Sources */,
 				883D204922D3B862006C56FB /* IPresentationAssembly.swift in Sources */,
 				883D203F22D3B862006C56FB /* SourceCoreLocation.swift in Sources */,
@@ -356,13 +360,13 @@
 				883D204122D3B862006C56FB /* SourceAVFoundation.swift in Sources */,
 				883D204022D3B862006C56FB /* SourceCoreMotion.swift in Sources */,
 				883D203B22D3B862006C56FB /* SourceFoundation.swift in Sources */,
-				883D204822D3B862006C56FB /* EntropySourceViewController.swift in Sources */,
 				883D203A22D3B862006C56FB /* ICoreAssembly.swift in Sources */,
 				883D205022D3B862006C56FB /* AboutViewController.swift in Sources */,
 				883D203D22D3B862006C56FB /* SourceDispatch.swift in Sources */,
 				883D1FA622D3B4FF006C56FB /* ViewController.swift in Sources */,
 				8870CD3522D60930008D3F37 /* ReservedModel.swift in Sources */,
 				883D203622D3B862006C56FB /* ServicesAssembly.swift in Sources */,
+				8870CD3A22D65ABE008D3F37 /* TouchView.swift in Sources */,
 				883D203822D3B862006C56FB /* EntropyManager.swift in Sources */,
 				883D1FA422D3B4FF006C56FB /* AppDelegate.swift in Sources */,
 				883D203722D3B862006C56FB /* IServicesAssembly.swift in Sources */,

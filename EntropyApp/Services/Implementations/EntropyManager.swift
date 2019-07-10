@@ -6,6 +6,8 @@
 //  Copyright © 2019 Андрей Зорькин. All rights reserved.
 //
 
+import UIKit
+
 protocol IEntropyManager {
 
     var delegate: IEntropyManagerDelegate? {get set}
@@ -14,25 +16,18 @@ protocol IEntropyManager {
     var numberOfEntropySources: Int {get}
     func start(source: SourceEntropy)
     func stop(source: SourceEntropy)
+    func touches(touches: Set<UITouch>, with event: UIEvent?)
 }
 
 protocol IEntropyManagerDelegate: class {
     
     func entropyManagerDidGetInformationFromSource(_ text: String)
     // Сырые значения
-    func entropyManagerDidGetRawValue(_ value: Double)
-    func entropyManagerDidGetRawValues(x: Double, y: Double, z: Double)
-    
+    func entropyManagerDidGetRawValues(_ values: [Double])
     // Случайные числа (32 бита)
-    func entropyManagerDidGetRandomNumber(_ value: UInt32)
-    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt32,
-                                           _ secondValue: UInt32,
-                                           _ thirdValue: UInt32)
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32])
     // Случайные числа (16 бит)
-    func entropyManagerDidGetRandomNumber(_ value: UInt16)
-    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt16,
-                                           _ secondValue: UInt16,
-                                           _ thirdValue: UInt16)
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16])
 }
 
 
@@ -41,6 +36,8 @@ enum SourceEntropy {
     case Accelerometer
     case Gyroscope
     case Magnitometer
+    case Location
+    case Touches
     case Undefined
 }
 
@@ -80,6 +77,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
     
     func start(source: SourceEntropy) {
         switch source {
+        case .Touches:
+            break;
         case .Motion:
             sourceCoreMotion.startMotion()
         case .Accelerometer:
@@ -88,6 +87,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
             sourceCoreMotion.startGyroscope()
         case .Magnitometer:
             sourceCoreMotion.startMagnitometer()
+        case .Location:
+            sourceCoreLocation.startLocation()
         case .Undefined:
             break;
         }
@@ -95,6 +96,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
     
     func stop(source: SourceEntropy) {
         switch source {
+        case .Touches:
+            break;
         case .Motion:
             sourceCoreMotion.stopMotion()
         case .Accelerometer:
@@ -103,6 +106,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
             sourceCoreMotion.stopGyroscope()
         case .Magnitometer:
             sourceCoreMotion.stopMagnitometer()
+        case .Location:
+            sourceCoreLocation.stopLocation()
         case .Undefined:
             break;
         }
@@ -117,8 +122,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         self.sourceDispatch = sourceDispatch
         self.sourceReserved = sourceReserved
         self.entropyList = [(sourceEntropy: .Undefined, name: "Время"),
-                            (sourceEntropy: .Undefined, name: "Прикосновение"),
-                            (sourceEntropy: .Undefined, name: "Географическое местоположение"),
+                            (sourceEntropy: .Touches, name: "Прикосновение"),
+                            (sourceEntropy: .Location, name: "Географическое местоположение"),
                             (sourceEntropy: .Motion, name: "Положение в пространстве"),
                             (sourceEntropy: .Accelerometer, name: "Акселерометр"),
                             (sourceEntropy: .Gyroscope, name: "Гироскоп"),
@@ -135,24 +140,28 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         self.sourceReserved.delegate = self
     }
     
-    func sourceCoreMotionDidChangeRawValues(x: Double, y: Double, z: Double) {
-        delegate?.entropyManagerDidGetRawValues(x: x, y: y, z: z)
+    func sourceCoreMotionDidChangeRawValues(_ values: [Double]) {
+        delegate?.entropyManagerDidGetRawValues(values)
     }
     
-    func sourceCoreMotionDidGetRandomNumber(_ value: UInt32) {
-        delegate?.entropyManagerDidGetRandomNumber(value)
+    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt32]) {
+        delegate?.entropyManagerDidGetRandomNumbers(numbers)
     }
     
-    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt32, _ secondValue: UInt32, _ thirdValue: UInt32) {
-        delegate?.entropyManagerDidGetRandomNumbers(firstValue, secondValue, thirdValue)
-    }
-    
-    func sourceCoreMotionDidGetRandomNumber(_ value: UInt16) {
-        delegate?.entropyManagerDidGetRandomNumber(value)
-    }
-    
-    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt16, _ secondValue: UInt16, _ thirdValue: UInt16) {
-        delegate?.entropyManagerDidGetRandomNumbers(firstValue, secondValue, thirdValue)
+    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt16]) {
+        delegate?.entropyManagerDidGetRandomNumbers(numbers)
     }
 
+    func sourceCoreLocationDidChangeRawValues(_ values: [Double]) {
+        delegate?.entropyManagerDidGetRawValues(values)
+    }
+    
+    func sourceUIKitDidChangeRawValues( _ values: [Double]) {
+        delegate?.entropyManagerDidGetRawValues(values)
+    }
+    
+    func touches(touches: Set<UITouch>, with event: UIEvent?) {
+        sourceUIKit.touches(touches: touches, with: event)
+    }
+    
 }

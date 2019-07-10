@@ -10,6 +10,7 @@ import UIKit
 
 class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate {
 
+    @IBOutlet weak var sourceView: TouchView!
     @IBOutlet weak var informationLabel: UILabel!
     
     private let presentationAssembly: IPresentationAssembly
@@ -31,38 +32,70 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         model.delegate = self
+        sourceView.delegate = model
+        switch model.source {
+        case .Touches:
+            break;
+        default:
+            sourceView.isUserInteractionEnabled = false
+        }
     }
+
     
     func entropySourceModelDidGetInformationFromSource(_ text: String) {
         informationLabel.text = text
     }
     
-    func entropySourceModelDidGetRandomNumber(_ value: UInt32) {
+    func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt32]) {
         
     }
     
-    func entropySourceModelDidGetRandomNumbers(_ firstValue: UInt32, _ secondValue: UInt32, _ thirdValue: UInt32) {
-        //informationLabel.text = "\(firstValue)\n\(secondValue)\n\(thirdValue)\n\n"
+    func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt16]) {
+
     }
     
-    func entropySourceModelDidGetRandomNumber(_ value: UInt16) {
-        
-    }
-    
-    func entropySourceModelDidGetRandomNumbers(_ firstValue: UInt16, _ secondValue: UInt16, _ thirdValue: UInt16) {
-        //informationLabel.text = "\(firstValue)\n\(secondValue)\n\(thirdValue)\n\n"
-    }
-    
-    func entropySourceModelDidGetRawValues(x: Double, y: Double, z: Double) {
+    func entropySourceModelDidGetRawValues( _ values: [Double]) {
         var binary = ""
         var raw = ""
-        for (index, i) in [x, y, z].enumerated(){
+        for (index, i) in values.enumerated(){
             let prolog = "Значение #\(index)  "
             let epilog = "\n"
             binary += prolog + i.getStringRepresentation() + epilog
             raw += prolog + "\(i)" + epilog
         }
         informationLabel.text = binary + "\n" + raw
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if model.source == .Touches {
+            model.touches(touches: touches, with: event)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        if model.source == .Touches {
+            model.touches(touches: touches, with: event)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        if model.source == .Touches {
+            model.touches(touches: touches, with: event)
+        }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        if model.source == .Touches {
+            model.touches(touches: touches, with: event)
+        }
+    }
+    
+    func entropySourceModelDidGetRawValues(_ values: [CGFloat]) {
+        
     }
 
 

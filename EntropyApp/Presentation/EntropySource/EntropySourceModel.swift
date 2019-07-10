@@ -6,29 +6,29 @@
 //  Copyright © 2019 Андрей Зорькин. All rights reserved.
 //
 
-protocol IEntropySourceModel {
+import UIKit
+
+protocol IEntropySourceModel: ITouchDelegate {
 
     var delegate: IEntropySourceModelDelegate? { get set }
+    var source: SourceEntropy {get}
+    func touches(touches: Set<UITouch>, with event: UIEvent?)
 }
 
 protocol IEntropySourceModelDelegate: class {
     func entropySourceModelDidGetInformationFromSource(_ text: String)
-    func entropySourceModelDidGetRawValues(x: Double, y: Double, z: Double)
-    func entropySourceModelDidGetRandomNumber(_ value: UInt32)
-    func entropySourceModelDidGetRandomNumbers(_ firstValue: UInt32,
-                                           _ secondValue: UInt32,
-                                           _ thirdValue: UInt32)
-    func entropySourceModelDidGetRandomNumber(_ value: UInt16)
-    func entropySourceModelDidGetRandomNumbers(_ firstValue: UInt16,
-                                           _ secondValue: UInt16,
-                                           _ thirdValue: UInt16)
+    func entropySourceModelDidGetRawValues(_ values: [Double])
+    func entropySourceModelDidGetRawValues(_ values: [CGFloat])
+    func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt32])
+    func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt16])
 }
 
 class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
+    
 
     weak var delegate: IEntropySourceModelDelegate?
     private var entropyManager: IEntropyManager
-    private let source: SourceEntropy
+    let source: SourceEntropy
 
     init(entropyManager: IEntropyManager, source: SourceEntropy) {
         self.entropyManager = entropyManager
@@ -47,28 +47,20 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
         delegate?.entropySourceModelDidGetInformationFromSource(text)
     }
     
-    func entropyManagerDidGetRandomNumber(_ value: UInt32) {
-        delegate?.entropySourceModelDidGetRandomNumber(value)
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32]) {
+        delegate?.entropySourceModelDidGetRandomNumbers(numbers)
     }
     
-    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt32, _ secondValue: UInt32, _ thirdValue: UInt32) {
-        delegate?.entropySourceModelDidGetRandomNumbers(firstValue, secondValue, thirdValue)
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {
+        delegate?.entropySourceModelDidGetRandomNumbers(numbers)
     }
     
-    func entropyManagerDidGetRandomNumber(_ value: UInt16) {
-        delegate?.entropySourceModelDidGetRandomNumber(value)
+    func entropyManagerDidGetRawValues(_ values: [Double]) {
+        delegate?.entropySourceModelDidGetRawValues(values)
     }
     
-    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt16, _ secondValue: UInt16, _ thirdValue: UInt16) {
-        delegate?.entropySourceModelDidGetRandomNumbers(firstValue, secondValue, thirdValue)
-    }
-    
-    func entropyManagerDidGetRawValues(x: Double, y: Double, z: Double) {
-        delegate?.entropySourceModelDidGetRawValues(x: x, y: y, z: z)
-    }
-    
-    func entropyManagerDidGetRawValue(_ value: Double) {
-        
+    func touches(touches: Set<UITouch>, with event: UIEvent?) {
+        entropyManager.touches(touches: touches, with: event)
     }
     
 }

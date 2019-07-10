@@ -6,6 +6,8 @@
 //  Copyright © 2019 Андрей Зорькин. All rights reserved.
 //
 
+import UIKit
+
 protocol IAboutModel {
 
     var delegate: IAboutModelDelegate? { get set }
@@ -16,6 +18,7 @@ protocol IAboutModelDelegate: class {
 }
 
 class AboutModel: IAboutModel, IEntropyManagerDelegate {
+    
 
     weak var delegate: IAboutModelDelegate?
     private var entropyManager: IEntropyManager
@@ -30,27 +33,15 @@ class AboutModel: IAboutModel, IEntropyManagerDelegate {
         
     }
     
-    func entropyManagerDidGetRandomNumber(_ value: UInt32) {
+    func entropyManagerDidGetRawValues(_ values: [Double]) {
         
     }
     
-    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt32, _ secondValue: UInt32, _ thirdValue: UInt32) {
-        
-    }
-
-    func entropyManagerDidGetRandomNumber(_ value: UInt16) {
-
-    }
-    
-    func entropyManagerDidGetRandomNumbers(_ firstValue: UInt16, _ secondValue: UInt16, _ thirdValue: UInt16) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32]) {
         
     }
     
-    func entropyManagerDidGetRawValue(_ value: Double) {
-        
-    }
-    
-    func entropyManagerDidGetRawValues(x: Double, y: Double, z: Double) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {
         
     }
 

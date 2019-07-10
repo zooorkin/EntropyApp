@@ -30,15 +30,9 @@ protocol ISourceCoreMotion {
 
 
 protocol ISourceCoreMotionDelegate: class {
-    func sourceCoreMotionDidChangeRawValues(x: Double, y: Double, z: Double)
-    func sourceCoreMotionDidGetRandomNumber(_ value: UInt32)
-    func sourceCoreMotionDidGetRandomNumber(_ value: UInt16)
-    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt32,
-                                             _ secondValue: UInt32,
-                                             _ thirdValue: UInt32)
-    func sourceCoreMotionDidGetRandomNumbers(_ firstValue: UInt16,
-                                             _ secondValue: UInt16,
-                                             _ thirdValue: UInt16)
+    func sourceCoreMotionDidChangeRawValues(_ values: [Double])
+    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt32])
+    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt16])
 }
 
 import CoreMotion
@@ -55,6 +49,7 @@ class SourceCoreMotion: ISourceCoreMotion {
     }
     
     func startMotion() {
+        print("startMotion...")
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0 / 60.0
             self.motion.showsDeviceMovementDisplay = true
@@ -135,13 +130,13 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.rotationRate.x
             let y = data.rotationRate.y
             let z = data.rotationRate.z
-            delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast32(),
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast32(),
                                                           y.getLast32(),
-                                                          z.getLast32())
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          z.getLast32()])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
                                                           y.getLast16(),
-                                                          z.getLast16())
+                                                          z.getLast16()])
         }
     }
     
@@ -150,13 +145,13 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.magneticField.x
             let y = data.magneticField.y
             let z = data.magneticField.z
-            delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast32(),
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast32(),
                                                           y.getLast32(),
-                                                          z.getLast32())
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          z.getLast32()])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
                                                           y.getLast16(),
-                                                          z.getLast16())
+                                                          z.getLast16()])
         }
     }
     
@@ -165,16 +160,13 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.acceleration.x
             let y = data.acceleration.y
             let z = data.acceleration.z
-            delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getFirst32(),
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getFirst32(),
                                                           y.getFirst32(),
-                                                          z.getFirst32())
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          z.getFirst32()])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
                                                           y.getLast16(),
-                                                          z.getLast16())
-            print("\(x.getLast32())")
-            print("\(x.getFirst32())")
-            print()
+                                                          z.getLast16()])
         }
     }
     
@@ -183,13 +175,13 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.attitude.roll
             let y = data.attitude.pitch
             let z = data.attitude.yaw
-            delegate?.sourceCoreMotionDidChangeRawValues(x: x, y: y, z: z)
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getFirst32(),
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getFirst32(),
                                                           y.getFirst32(),
-                                                          z.getFirst32())
-            delegate?.sourceCoreMotionDidGetRandomNumbers(x.getLast16(),
+                                                          z.getFirst32()])
+            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
                                                           y.getLast16(),
-                                                          z.getLast16())
+                                                          z.getLast16()])
         }
     }
     
