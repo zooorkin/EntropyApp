@@ -43,7 +43,9 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
 
     
     func entropySourceModelDidGetInformationFromSource(_ text: String) {
-        informationLabel.text = text
+        DispatchQueue.main.async {
+            self.informationLabel.text = text
+        }
     }
     
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt32]) {
@@ -63,7 +65,13 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
             binary += prolog + i.getStringRepresentation() + epilog
             raw += prolog + "\(i)" + epilog
         }
-        informationLabel.text = binary + "\n" + raw
+        DispatchQueue.main.async {
+            self.informationLabel.text = binary + "\n" + raw
+        }
+    }
+    
+    func entropySourceModelDidGetRawValues(_ values: [Float]) {
+        entropySourceModelDidGetRawValues(values.map({ (x) -> Double in Double(x) }))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -92,10 +100,6 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
         if model.source == .Touches {
             model.touches(touches: touches, with: event)
         }
-    }
-    
-    func entropySourceModelDidGetRawValues(_ values: [CGFloat]) {
-        
     }
 
 

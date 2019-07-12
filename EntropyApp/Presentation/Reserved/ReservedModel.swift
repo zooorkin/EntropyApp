@@ -44,4 +44,8 @@ class ReservedModel: IReservedModel, IEntropyManagerDelegate {
         
     }
     
+    func entropyManagerDidGetRawValues(_ values: [Float]) {
+        
+    }
+    
 }

@@ -24,6 +24,8 @@ protocol IEntropyManagerDelegate: class {
     func entropyManagerDidGetInformationFromSource(_ text: String)
     // Сырые значения
     func entropyManagerDidGetRawValues(_ values: [Double])
+    
+    func entropyManagerDidGetRawValues(_ values: [Float])
     // Случайные числа (32 бита)
     func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32])
     // Случайные числа (16 бит)
@@ -38,6 +40,7 @@ enum SourceEntropy {
     case Magnitometer
     case Location
     case Touches
+    case Microphone
     case Undefined
 }
 
@@ -89,6 +92,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
             sourceCoreMotion.startMagnitometer()
         case .Location:
             sourceCoreLocation.startLocation()
+        case .Microphone:
+            sourceAVFoundation.startMicrophone()
         case .Undefined:
             break;
         }
@@ -108,6 +113,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
             sourceCoreMotion.stopMagnitometer()
         case .Location:
             sourceCoreLocation.stopLocation()
+        case .Microphone:
+            sourceAVFoundation.stopMicrophone()
         case .Undefined:
             break;
         }
@@ -128,7 +135,7 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
                             (sourceEntropy: .Accelerometer, name: "Акселерометр"),
                             (sourceEntropy: .Gyroscope, name: "Гироскоп"),
                             (sourceEntropy: .Magnitometer, name: "Магнитометр"),
-                            (sourceEntropy: .Undefined, name: "Микрофон"),
+                            (sourceEntropy: .Microphone, name: "Микрофон"),
                             (sourceEntropy: .Undefined, name: "Камера"),
                             (sourceEntropy: .Undefined, name: "Многопоточность")]
         self.sourceFoundation.delegate = self
@@ -138,6 +145,10 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         self.sourceAVFoundation.delegate = self
         self.sourceDispatch.delegate = self
         self.sourceReserved.delegate = self
+    }
+    
+    func touches(touches: Set<UITouch>, with event: UIEvent?) {
+        sourceUIKit.touches(touches: touches, with: event)
     }
     
     func sourceCoreMotionDidChangeRawValues(_ values: [Double]) {
@@ -160,8 +171,8 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         delegate?.entropyManagerDidGetRawValues(values)
     }
     
-    func touches(touches: Set<UITouch>, with event: UIEvent?) {
-        sourceUIKit.touches(touches: touches, with: event)
+    func sourceAVFoundationDidChangeRawValues(_ values: [Float]) {
+        delegate?.entropyManagerDidGetRawValues(values)
     }
     
 }

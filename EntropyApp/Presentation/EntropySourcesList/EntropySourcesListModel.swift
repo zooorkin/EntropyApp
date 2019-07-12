@@ -62,5 +62,9 @@ class EntropySourcesListModel: IEntropySourcesListModel, IEntropyManagerDelegate
     func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {
         
     }
+    
+    func entropyManagerDidGetRawValues(_ values: [Float]) {
+        
+    }
 
 }

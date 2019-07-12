@@ -18,7 +18,7 @@ protocol IEntropySourceModel: ITouchDelegate {
 protocol IEntropySourceModelDelegate: class {
     func entropySourceModelDidGetInformationFromSource(_ text: String)
     func entropySourceModelDidGetRawValues(_ values: [Double])
-    func entropySourceModelDidGetRawValues(_ values: [CGFloat])
+    func entropySourceModelDidGetRawValues(_ values: [Float])
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt32])
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt16])
 }
@@ -56,6 +56,10 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
     }
     
     func entropyManagerDidGetRawValues(_ values: [Double]) {
+        delegate?.entropySourceModelDidGetRawValues(values)
+    }
+    
+    func entropyManagerDidGetRawValues(_ values: [Float]) {
         delegate?.entropySourceModelDidGetRawValues(values)
     }
     
