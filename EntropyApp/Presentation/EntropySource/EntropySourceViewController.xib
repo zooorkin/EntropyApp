@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EntropySourceViewController" customModule="EntropyApp" customModuleProvider="target">
             <connections>
+                <outlet property="PearsonTestResultLabel" destination="Kak-RH-ZeN" id="NhA-Hp-9Tm"/>
                 <outlet property="informationLabel" destination="cQU-sc-SPY" id="Cy8-Yq-mE8"/>
                 <outlet property="sourceView" destination="Ihi-dw-kzR" id="KQW-RJ-al8"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bZv-Qa-Qab"/>
@@ -30,20 +31,38 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQU-sc-SPY">
-                    <rect key="frame" x="32" y="364" width="350" height="13"/>
+                    <rect key="frame" x="32" y="475" width="350" height="13"/>
                     <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Гипотеза о равномерном распределении..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kak-RH-ZeN">
+                    <rect key="frame" x="32" y="364" width="350" height="41"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxd-WG-f4i">
+                    <rect key="frame" x="304" y="413" width="78" height="30"/>
+                    <state key="normal" title="Проверить"/>
+                    <connections>
+                        <action selector="pearsonTestAction:" destination="-1" eventType="touchUpInside" id="1Eu-9G-zQa"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="cQU-sc-SPY" firstAttribute="top" secondItem="mxd-WG-f4i" secondAttribute="bottom" constant="32" id="2CT-ig-1cJ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mxd-WG-f4i" secondAttribute="trailing" constant="32" id="43G-D8-cN3"/>
                 <constraint firstItem="Ihi-dw-kzR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="32" id="95F-ZZ-uLN"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="cQU-sc-SPY" secondAttribute="trailing" constant="32" id="MRZ-FD-Tkh"/>
                 <constraint firstItem="cQU-sc-SPY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="ZY2-Rk-mLN"/>
+                <constraint firstItem="Kak-RH-ZeN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="afG-KZ-KTh"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ihi-dw-kzR" secondAttribute="trailing" constant="32" id="b8R-bC-cRU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Kak-RH-ZeN" secondAttribute="trailing" constant="32" id="cxL-dG-A3I"/>
                 <constraint firstItem="Ihi-dw-kzR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="h8m-P5-Jyc"/>
-                <constraint firstItem="cQU-sc-SPY" firstAttribute="top" secondItem="Ihi-dw-kzR" secondAttribute="bottom" constant="32" id="ioN-ka-H0s"/>
+                <constraint firstItem="mxd-WG-f4i" firstAttribute="top" secondItem="Kak-RH-ZeN" secondAttribute="bottom" constant="8" id="oMY-0i-DLz"/>
+                <constraint firstItem="Kak-RH-ZeN" firstAttribute="top" secondItem="Ihi-dw-kzR" secondAttribute="bottom" constant="32" id="ycN-Ra-mfD"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="47.826086956521742" y="279.91071428571428"/>

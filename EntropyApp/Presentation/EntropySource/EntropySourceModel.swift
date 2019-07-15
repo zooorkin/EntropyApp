@@ -13,6 +13,7 @@ protocol IEntropySourceModel: ITouchDelegate {
     var delegate: IEntropySourceModelDelegate? { get set }
     var source: SourceEntropy {get}
     func touches(touches: Set<UITouch>, with event: UIEvent?)
+    func requestRandomNumbers(count: Int)
 }
 
 protocol IEntropySourceModelDelegate: class {
@@ -21,21 +22,29 @@ protocol IEntropySourceModelDelegate: class {
     func entropySourceModelDidGetRawValues(_ values: [Float])
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt32])
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt16])
+    func entropySourceModelDidGetPearsonTest(result: String)
 }
 
 class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
     
 
     weak var delegate: IEntropySourceModelDelegate?
+    
     private var entropyManager: IEntropyManager
+    
+    private var statistics: Statistics
+    
     let source: SourceEntropy
 
+    
     init(entropyManager: IEntropyManager, source: SourceEntropy) {
         self.entropyManager = entropyManager
         self.source = source
+        self.statistics = Statistics()
         self.entropyManager.delegate = self
         print("Сервис \(source) запускается...")
         entropyManager.start(source: source)
+        entropyManager.requestRandomNumbers(count: 100, for: source)
     }
     
     deinit {
@@ -49,6 +58,7 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
     
     func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32]) {
         delegate?.entropySourceModelDidGetRandomNumbers(numbers)
+        delegate?.entropySourceModelDidGetPearsonTest(result: statistics.pearsonTest(numbers: numbers))
     }
     
     func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {
@@ -65,6 +75,10 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
     
     func touches(touches: Set<UITouch>, with event: UIEvent?) {
         entropyManager.touches(touches: touches, with: event)
+    }
+    
+    func requestRandomNumbers(count: Int){
+        entropyManager.requestRandomNumbers(count: count, for: source)
     }
     
 }

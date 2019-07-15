@@ -14,6 +14,14 @@ protocol ISourceCoreMotion {
     
     func stopMotion()
     
+    func requestRandomNumbersFromMotion(count: Int)
+    
+    func requestRandomNumbersFromAccelerometer(count: Int)
+    
+    func requestRandomNumbersFromGyroscope(count: Int)
+    
+    func requestRandomNumbersFromMagnitometer(count: Int)
+    
     func startAccelerometer()
     
     func stopAccelerometer()
@@ -131,12 +139,6 @@ class SourceCoreMotion: ISourceCoreMotion {
             let y = data.rotationRate.y
             let z = data.rotationRate.z
             delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast32(),
-                                                          y.getLast32(),
-                                                          z.getLast32()])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
-                                                          y.getLast16(),
-                                                          z.getLast16()])
         }
     }
     
@@ -146,12 +148,6 @@ class SourceCoreMotion: ISourceCoreMotion {
             let y = data.magneticField.y
             let z = data.magneticField.z
             delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast32(),
-                                                          y.getLast32(),
-                                                          z.getLast32()])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
-                                                          y.getLast16(),
-                                                          z.getLast16()])
         }
     }
     
@@ -161,12 +157,6 @@ class SourceCoreMotion: ISourceCoreMotion {
             let y = data.acceleration.y
             let z = data.acceleration.z
             delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getFirst32(),
-                                                          y.getFirst32(),
-                                                          z.getFirst32()])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
-                                                          y.getLast16(),
-                                                          z.getLast16()])
         }
     }
     
@@ -176,13 +166,85 @@ class SourceCoreMotion: ISourceCoreMotion {
             let y = data.attitude.pitch
             let z = data.attitude.yaw
             delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getFirst32(),
-                                                          y.getFirst32(),
-                                                          z.getFirst32()])
-            delegate?.sourceCoreMotionDidGetRandomNumbers([x.getLast16(),
-                                                          y.getLast16(),
-                                                          z.getLast16()])
         }
     }
+    
+    func requestRandomNumbersFromMotion(count: Int) {
+            DispatchQueue.global(qos: .utility).async {
+            var numbers: [UInt32] = []
+            for _ in 0..<60{
+                if let data = self.motion.deviceMotion {
+                    let x = data.attitude.roll
+                    let y = data.attitude.pitch
+                    let z = data.attitude.yaw
+                    numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                }
+                usleep(16667)
+            }
+            while numbers.count != 100 {
+                numbers.remove(at: numbers.count - 1)
+            }
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+        }
+    }
+    
+    func requestRandomNumbersFromAccelerometer(count: Int) {
+            DispatchQueue.global(qos: .utility).async {
+            var numbers: [UInt32] = []
+            for _ in 0..<60{
+                if let data = self.motion.accelerometerData {
+                    let x = data.acceleration.x
+                    let y = data.acceleration.y
+                    let z = data.acceleration.z
+                    numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                }
+                usleep(16667)
+            }
+            while numbers.count != 100 {
+                numbers.remove(at: numbers.count - 1)
+            }
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+        }
+    }
+    
+    func requestRandomNumbersFromGyroscope(count: Int) {
+        DispatchQueue.global(qos: .utility).async {
+            var numbers: [UInt32] = []
+            for _ in 0..<60{
+                if let data = self.motion.gyroData {
+                    let x = data.rotationRate.x
+                    let y = data.rotationRate.y
+                    let z = data.rotationRate.z
+                    numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                }
+                usleep(16667)
+            }
+            while numbers.count != 100 {
+                numbers.remove(at: numbers.count - 1)
+            }
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+        }
+    }
+    
+    func requestRandomNumbersFromMagnitometer(count: Int) {
+        DispatchQueue.global(qos: .utility).async {
+            var numbers: [UInt32] = []
+            for _ in 0..<60{
+                if let data = self.motion.magnetometerData {
+                    let x = data.magneticField.x
+                    let y = data.magneticField.y
+                    let z = data.magneticField.z
+                    numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                }
+                usleep(16667)
+            }
+            while numbers.count != 100 {
+                numbers.remove(at: numbers.count - 1)
+            }
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+        }
+    }
+
+
     
 }

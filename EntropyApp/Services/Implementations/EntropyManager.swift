@@ -17,6 +17,7 @@ protocol IEntropyManager {
     func start(source: SourceEntropy)
     func stop(source: SourceEntropy)
     func touches(touches: Set<UITouch>, with event: UIEvent?)
+    func requestRandomNumbers(count: Int, for source: SourceEntropy)
 }
 
 protocol IEntropyManagerDelegate: class {
@@ -173,6 +174,21 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
     
     func sourceAVFoundationDidChangeRawValues(_ values: [Float]) {
         delegate?.entropyManagerDidGetRawValues(values)
+    }
+    
+    func requestRandomNumbers(count: Int, for source: SourceEntropy) {
+        switch source {
+        case .Motion:
+            sourceCoreMotion.requestRandomNumbersFromMotion(count: count)
+        case .Accelerometer:
+            sourceCoreMotion.requestRandomNumbersFromAccelerometer(count: count)
+        case .Gyroscope:
+            sourceCoreMotion.requestRandomNumbersFromGyroscope(count: count)
+        case .Magnitometer:
+            sourceCoreMotion.requestRandomNumbersFromMagnitometer(count: count)
+        default:
+            break;
+        }
     }
     
 }

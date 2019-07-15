@@ -39,6 +39,7 @@
 		883D205522D3B98E006C56FB /* EntropyListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883D205322D3B98D006C56FB /* EntropyListCell.xib */; };
 		883D205622D3B98E006C56FB /* EntropyListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D205422D3B98D006C56FB /* EntropyListCell.swift */; };
 		883D205A22D5EF38006C56FB /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D205922D5EF38006C56FB /* Double.swift */; };
+		883DC2D622DCC0150057E4F5 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883DC2D522DCC0150057E4F5 /* Statistics.swift */; };
 		8870CD3322D60925008D3F37 /* ReservedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883D203022D3B861006C56FB /* ReservedViewController.xib */; };
 		8870CD3422D60930008D3F37 /* ReservedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202E22D3B861006C56FB /* ReservedViewController.swift */; };
 		8870CD3522D60930008D3F37 /* ReservedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D202F22D3B861006C56FB /* ReservedModel.swift */; };
@@ -84,6 +85,7 @@
 		883D205322D3B98D006C56FB /* EntropyListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntropyListCell.xib; sourceTree = "<group>"; };
 		883D205422D3B98D006C56FB /* EntropyListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntropyListCell.swift; sourceTree = "<group>"; };
 		883D205922D5EF38006C56FB /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		883DC2D522DCC0150057E4F5 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		8870CD3922D65ABE008D3F37 /* TouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchView.swift; sourceTree = "<group>"; };
 		8870CD3B22D65C25008D3F37 /* EntropySourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntropySourceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +156,7 @@
 		883D201222D3B861006C56FB /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				883DC2D522DCC0150057E4F5 /* Statistics.swift */,
 				883D201322D3B861006C56FB /* EntropyManager.swift */,
 			);
 			path = Implementations;
@@ -347,6 +350,7 @@
 				883D204A22D3B862006C56FB /* PresentationAssembly.swift in Sources */,
 				8870CD3C22D65C25008D3F37 /* EntropySourceViewController.swift in Sources */,
 				8870CD3422D60930008D3F37 /* ReservedViewController.swift in Sources */,
+				883DC2D622DCC0150057E4F5 /* Statistics.swift in Sources */,
 				883D204922D3B862006C56FB /* IPresentationAssembly.swift in Sources */,
 				883D203F22D3B862006C56FB /* SourceCoreLocation.swift in Sources */,
 				883D205A22D5EF38006C56FB /* Double.swift in Sources */,

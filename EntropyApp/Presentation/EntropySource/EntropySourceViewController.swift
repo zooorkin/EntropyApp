@@ -12,6 +12,7 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
 
     @IBOutlet weak var sourceView: TouchView!
     @IBOutlet weak var informationLabel: UILabel!
+    @IBOutlet weak var PearsonTestResultLabel: UILabel!
     
     private let presentationAssembly: IPresentationAssembly
 
@@ -39,8 +40,14 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
         default:
             sourceView.isUserInteractionEnabled = false
         }
+        PearsonTestResultLabel.text = "Гипотеза о равномерном распределении..."
     }
 
+    @IBAction func pearsonTestAction(_ sender: Any) {
+        let prevText = PearsonTestResultLabel.text ?? ""
+        PearsonTestResultLabel.text = prevText + " [Обновляется]"
+        model.requestRandomNumbers(count: 100)
+    }
     
     func entropySourceModelDidGetInformationFromSource(_ text: String) {
         DispatchQueue.main.async {
@@ -72,6 +79,12 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     
     func entropySourceModelDidGetRawValues(_ values: [Float]) {
         entropySourceModelDidGetRawValues(values.map({ (x) -> Double in Double(x) }))
+    }
+    
+    func entropySourceModelDidGetPearsonTest(result: String) {
+        DispatchQueue.main.async {
+            self.PearsonTestResultLabel.text = result
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
