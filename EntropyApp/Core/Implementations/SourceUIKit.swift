@@ -13,11 +13,14 @@ protocol ISourceUIKit {
     var delegate: ISourceUIKitDelegate? {get set}
     
     func touches(touches: Set<UITouch>, with event: UIEvent?)
+    
+    func requestRandomNumbers(count: Int)
 }
 
 
 protocol ISourceUIKitDelegate {
     func sourceUIKitDidChangeRawValues(_ values: [Double])
+    func sourceUIKitDidGetRandomNumbers(_ numbers: [UInt32])
 }
 
 
@@ -31,7 +34,27 @@ class SourceUIKit: ISourceUIKit {
             let x = Double(location.x)
             let y = Double(location.y)
             delegate?.sourceUIKitDidChangeRawValues([x, y])
+            if let requiredCount = requiredCountOfRandomNumbers {
+                randomNumbers += [UInt32(x.getFirst16()) * 0xFFFF + UInt32(y.getFirst16())]
+                //randomNumbers += [x.getFirst32(), y.getFirst32()]
+                if randomNumbers.count >= requiredCount {
+                    while randomNumbers.count > requiredCount {
+                        randomNumbers.remove(at: randomNumbers.count - 1)
+                    }
+                    delegate?.sourceUIKitDidGetRandomNumbers(randomNumbers)
+                    requiredCountOfRandomNumbers = nil
+                    randomNumbers = []
+                }
+            }
         }
     }
+    
+    var randomNumbers: [UInt32] = []
+    var requiredCountOfRandomNumbers: Int?
+    
+    func requestRandomNumbers(count: Int) {
+        requiredCountOfRandomNumbers = count
+    }
+    
 
 }

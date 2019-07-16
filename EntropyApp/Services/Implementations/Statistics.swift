@@ -9,6 +9,50 @@
 import Foundation
 
 class Statistics {
+    
+    public func expectationDiff(expectation: UInt32, realExpectation: UInt32) -> Double {
+        var a = expectation
+        var b = realExpectation
+        if a < b {
+            swap(&a, &b)
+        }
+        let c = realExpectation
+        return Double((a - b)) / Double(c) * 100
+    }
+    
+    public func varienceDiff(varience: UInt64, realVarience: UInt64) -> Double {
+        var a = varience
+        var b = realVarience
+        if a < b {
+            swap(&a, &b)
+        }
+        let c = realVarience
+        return Double((a - b)) / Double(c) * 100
+    }
+    
+    public func realExpectation() -> UInt32 {
+        return UInt32.max / 2
+    }
+    
+    public func realVarience() -> UInt64 {
+        let x = UInt64(UInt32.max / 2)
+        return x / 3 * x
+    }
+    
+    public func expectation(numbers: [UInt32]) -> UInt32 {
+        return UInt32(numbers.reduce(0) { (sum: UInt64, x: UInt32) -> UInt64 in
+             sum + UInt64(x)
+        } / UInt64(numbers.count))
+    }
+    
+    public func varience(numbers: [UInt32], expectation: UInt32) -> UInt64 {
+        let sum = numbers.reduce(0) { (sum: UInt64, x: UInt32) -> UInt64 in
+            let diff = abs(Int64(x) - Int64(expectation))
+            return sum + (UInt64(diff) / UInt64(numbers.count - 1) * UInt64(diff))
+        }
+        return sum
+    }
+    
     public func pearsonTest(numbers: [UInt32], k: Int = 10) -> String{
         let N = numbers.count
         let expectedFrequency = N / k
@@ -46,10 +90,10 @@ class Statistics {
     }
     func isRejected(_ colculatedXi: Double, xi: Double) -> String {
         if colculatedXi > xi {
-            return "Гипотеза о равномерном распределении ОТКЛОНЕНА"
+            return "ОТКЛОНЕНА"
             //return "H0 is rejected"
         } else {
-            return "Гипотеза о равномерном распределении НЕ ОТКЛОНЕНА"
+            return "НЕ ОТКЛОНЕНА"
             //return "H0 is not rejected"
         }
     }

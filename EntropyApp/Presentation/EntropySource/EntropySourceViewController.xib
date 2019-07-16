@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
+    <device id="ipad11_0rounded" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -13,56 +13,117 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EntropySourceViewController" customModule="EntropyApp" customModuleProvider="target">
             <connections>
                 <outlet property="PearsonTestResultLabel" destination="Kak-RH-ZeN" id="NhA-Hp-9Tm"/>
+                <outlet property="countOfNumberSegmentedControl" destination="htO-OF-HHe" id="9BL-QB-PIJ"/>
                 <outlet property="informationLabel" destination="cQU-sc-SPY" id="Cy8-Yq-mE8"/>
                 <outlet property="sourceView" destination="Ihi-dw-kzR" id="KQW-RJ-al8"/>
+                <outlet property="statisticsInformationLabel" destination="919-sN-ubk" id="Ejy-tG-Uu8"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bZv-Qa-Qab"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ihi-dw-kzR" customClass="TouchView" customModule="EntropyApp" customModuleProvider="target">
-                    <rect key="frame" x="32" y="76" width="350" height="256"/>
+                    <rect key="frame" x="32" y="56" width="770" height="256"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="256" id="F82-IM-ZaS"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQU-sc-SPY">
-                    <rect key="frame" x="32" y="475" width="350" height="13"/>
+                    <rect key="frame" x="32" y="535.5" width="770" height="13"/>
                     <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Гипотеза о равномерном распределении..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kak-RH-ZeN">
-                    <rect key="frame" x="32" y="364" width="350" height="41"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kak-RH-ZeN">
+                    <rect key="frame" x="32" y="366" width="770" height="13"/>
+                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxd-WG-f4i">
-                    <rect key="frame" x="304" y="413" width="78" height="30"/>
-                    <state key="normal" title="Проверить"/>
+                    <rect key="frame" x="724" y="416.5" width="78" height="30"/>
+                    <state key="normal" title="Проверить">
+                        <color key="titleColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
                     <connections>
                         <action selector="pearsonTestAction:" destination="-1" eventType="touchUpInside" id="1Eu-9G-zQa"/>
                     </connections>
                 </button>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="htO-OF-HHe">
+                    <rect key="frame" x="32" y="417.5" width="137" height="29"/>
+                    <segments>
+                        <segment title="100"/>
+                        <segment title="400"/>
+                        <segment title="1600"/>
+                    </segments>
+                    <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </segmentedControl>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="919-sN-ubk">
+                    <rect key="frame" x="32" y="484.5" width="770" height="13"/>
+                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Размер выборки" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-Tu-yLg">
+                    <rect key="frame" x="32" y="395" width="770" height="13.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Статистическая значения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRt-ga-CIw">
+                    <rect key="frame" x="32" y="462.5" width="770" height="14"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Значения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nns-xx-voE">
+                    <rect key="frame" x="32" y="513.5" width="770" height="14"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Гипотеза о равномерном распределений (критерий согласия Хи-квадрат)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmf-Ze-AFw">
+                    <rect key="frame" x="32" y="344" width="770" height="14"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="cQU-sc-SPY" firstAttribute="top" secondItem="mxd-WG-f4i" secondAttribute="bottom" constant="32" id="2CT-ig-1cJ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="DRt-ga-CIw" secondAttribute="trailing" constant="32" id="21G-WC-nG7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mxd-WG-f4i" secondAttribute="trailing" constant="32" id="43G-D8-cN3"/>
                 <constraint firstItem="Ihi-dw-kzR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="32" id="95F-ZZ-uLN"/>
+                <constraint firstItem="qmf-Ze-AFw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="A9f-8V-0qC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="qmf-Ze-AFw" secondAttribute="trailing" constant="32" id="IF1-Zh-6q3"/>
+                <constraint firstItem="Nns-xx-voE" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="JcE-ty-aj5"/>
+                <constraint firstItem="919-sN-ubk" firstAttribute="top" secondItem="DRt-ga-CIw" secondAttribute="bottom" constant="8" id="KDi-4Z-Q37"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="cQU-sc-SPY" secondAttribute="trailing" constant="32" id="MRZ-FD-Tkh"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="lGd-Tu-yLg" secondAttribute="trailing" constant="32" id="Nlh-Tt-24e"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="919-sN-ubk" secondAttribute="trailing" constant="32" id="Npm-qh-mVz"/>
+                <constraint firstItem="919-sN-ubk" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="OV3-3W-W4u"/>
+                <constraint firstItem="cQU-sc-SPY" firstAttribute="top" secondItem="Nns-xx-voE" secondAttribute="bottom" constant="8" id="OlU-gr-3Hn"/>
+                <constraint firstItem="DRt-ga-CIw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="Rjc-hA-wvP"/>
+                <constraint firstItem="mxd-WG-f4i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="htO-OF-HHe" secondAttribute="trailing" constant="32" id="U7a-qO-N5N"/>
+                <constraint firstItem="Kak-RH-ZeN" firstAttribute="top" secondItem="qmf-Ze-AFw" secondAttribute="bottom" constant="8" id="VrA-J2-jiu"/>
+                <constraint firstItem="mxd-WG-f4i" firstAttribute="top" secondItem="lGd-Tu-yLg" secondAttribute="bottom" constant="8" id="YpT-pI-Prx"/>
+                <constraint firstItem="lGd-Tu-yLg" firstAttribute="top" secondItem="Kak-RH-ZeN" secondAttribute="bottom" constant="16" id="Yqo-33-Okj"/>
                 <constraint firstItem="cQU-sc-SPY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="ZY2-Rk-mLN"/>
                 <constraint firstItem="Kak-RH-ZeN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="afG-KZ-KTh"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ihi-dw-kzR" secondAttribute="trailing" constant="32" id="b8R-bC-cRU"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Kak-RH-ZeN" secondAttribute="trailing" constant="32" id="cxL-dG-A3I"/>
+                <constraint firstItem="htO-OF-HHe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="cxf-Ja-gbB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Nns-xx-voE" secondAttribute="trailing" constant="32" id="gcd-3E-cs2"/>
                 <constraint firstItem="Ihi-dw-kzR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="h8m-P5-Jyc"/>
-                <constraint firstItem="mxd-WG-f4i" firstAttribute="top" secondItem="Kak-RH-ZeN" secondAttribute="bottom" constant="8" id="oMY-0i-DLz"/>
-                <constraint firstItem="Kak-RH-ZeN" firstAttribute="top" secondItem="Ihi-dw-kzR" secondAttribute="bottom" constant="32" id="ycN-Ra-mfD"/>
+                <constraint firstItem="lGd-Tu-yLg" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="ky9-yW-90o"/>
+                <constraint firstItem="qmf-Ze-AFw" firstAttribute="top" secondItem="Ihi-dw-kzR" secondAttribute="bottom" constant="32" id="lHC-BB-er9"/>
+                <constraint firstItem="htO-OF-HHe" firstAttribute="centerY" secondItem="mxd-WG-f4i" secondAttribute="centerY" id="ll5-Vh-Wor"/>
+                <constraint firstItem="Nns-xx-voE" firstAttribute="top" secondItem="919-sN-ubk" secondAttribute="bottom" constant="16" id="qQy-k3-bt1"/>
+                <constraint firstItem="DRt-ga-CIw" firstAttribute="top" secondItem="mxd-WG-f4i" secondAttribute="bottom" constant="16" id="x1y-2j-qDu"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="47.826086956521742" y="279.91071428571428"/>

@@ -16,12 +16,15 @@ protocol ISourceAVFoundation {
     
     func stopMicrophone()
     
+    func requestRandomNumbers(count: Int)
+    
 }
 
 
 protocol ISourceAVFoundationDelegate {
     
     func sourceAVFoundationDidChangeRawValues(_ values: [Float])
+    func sourceAVFoundationDidGetRandomNumbers(_ numbers: [UInt32])
 
 }
 
@@ -43,8 +46,12 @@ class SourceAVFoundation: ISourceAVFoundation {
                                         (buffer: AVAudioPCMBuffer, audioTime  : AVAudioTime) in
                                         if let pointer = buffer.floatChannelData?.pointee {
                                             var array = [Float]()
-                                            for i in 0..<24 {
-                                                array.append(pointer.advanced(by: i).pointee)
+                                            for i in 0..<20 {
+                                                let x = pointer.advanced(by: 2*i).pointee
+                                                let y = pointer.advanced(by: 2*i+1).pointee
+                                                array.append(x)
+                                                array.append(y)
+                                                self.addRandomNumbers(x: Double(x), y: Double(y))
                                             }
                                             self.delegate?.sourceAVFoundationDidChangeRawValues(array)
                                         }
@@ -61,6 +68,27 @@ class SourceAVFoundation: ISourceAVFoundation {
         let bus = 0
         audioEngine.inputNode.removeTap(onBus: bus)
         audioEngine.stop()
+    }
+    
+    private func addRandomNumbers(x: Double, y: Double){
+        if let requiredCount = requiredCountOfRandomNumbers {
+            randomNumbers += [UInt32(x.getFirst16()) * 0xFFFF + UInt32(y.getFirst16())]
+            if randomNumbers.count >= requiredCount {
+                while randomNumbers.count > requiredCount {
+                    randomNumbers.remove(at: randomNumbers.count - 1)
+                }
+                delegate?.sourceAVFoundationDidGetRandomNumbers(randomNumbers)
+                requiredCountOfRandomNumbers = nil
+                randomNumbers = []
+            }
+        }
+    }
+    
+    var randomNumbers: [UInt32] = []
+    var requiredCountOfRandomNumbers: Int?
+    
+    func requestRandomNumbers(count: Int) {
+        requiredCountOfRandomNumbers = count
     }
 
 }

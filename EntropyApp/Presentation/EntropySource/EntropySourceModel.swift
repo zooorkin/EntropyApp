@@ -23,6 +23,12 @@ protocol IEntropySourceModelDelegate: class {
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt32])
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt16])
     func entropySourceModelDidGetPearsonTest(result: String)
+    func entropySourceModelDidGetExpectation(result: String)
+    func entropySourceModelDidGetRealExpectation(result: String)
+    func entropySourceModelDidGetVarience(result: String)
+    func entropySourceModelDidGetRealVarience(result: String)
+    func entropySourceModelDidGetVarienceDiff(result: String)
+    func entropySourceModelDidGetExpectationDiff(result: String)
 }
 
 class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
@@ -44,7 +50,6 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
         self.entropyManager.delegate = self
         print("Сервис \(source) запускается...")
         entropyManager.start(source: source)
-        entropyManager.requestRandomNumbers(count: 100, for: source)
     }
     
     deinit {
@@ -59,6 +64,18 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
     func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32]) {
         delegate?.entropySourceModelDidGetRandomNumbers(numbers)
         delegate?.entropySourceModelDidGetPearsonTest(result: statistics.pearsonTest(numbers: numbers))
+        let expectation = statistics.expectation(numbers: numbers)
+        let realExpectation = statistics.realExpectation()
+        let varience = statistics.varience(numbers: numbers, expectation: expectation)
+        let realVarience = statistics.realVarience()
+        let expectationDiff = statistics.expectationDiff(expectation: expectation, realExpectation: realExpectation)
+        let variationDiff = statistics.varienceDiff(varience: varience, realVarience: realVarience)
+        delegate?.entropySourceModelDidGetExpectation(result: String(expectation))
+        delegate?.entropySourceModelDidGetRealExpectation(result: String(realExpectation))
+        delegate?.entropySourceModelDidGetVarience(result: String(varience))
+        delegate?.entropySourceModelDidGetRealVarience(result: String(realVarience))
+        delegate?.entropySourceModelDidGetExpectationDiff(result: String(expectationDiff))
+        delegate?.entropySourceModelDidGetVarienceDiff(result: String(variationDiff))
     }
     
     func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {

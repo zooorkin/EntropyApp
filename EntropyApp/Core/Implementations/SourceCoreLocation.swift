@@ -15,6 +15,8 @@ protocol ISourceCoreLocation {
     func startLocation()
     
     func stopLocation()
+    
+    func requestRandomNumbers(count: Int)
 }
 
 
@@ -48,6 +50,10 @@ class SourceCoreLocation: NSObject, ISourceCoreLocation, CLLocationManagerDelega
     
     func stopLocation() {
         locationManager.stopUpdatingLocation()
+    }
+    
+    func requestRandomNumbers(count: Int) {
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

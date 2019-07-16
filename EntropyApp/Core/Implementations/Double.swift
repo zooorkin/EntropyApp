@@ -11,16 +11,21 @@ import Foundation
 extension Double {
     // Возвращает младшие 4 байта мантиссы
     func getLast32() -> UInt32 {
-        return UInt32(self.significandBitPattern & 0xFFFFFFFF)
+        return UInt32(self.significandBitPattern & 0xFF_FF_FF_FF)
     }
-    // Возвращает младшие 4 байта мантиссы
+    // Возвращает старшие 4 байта мантиссы
     func getFirst32() -> UInt32 {
-        return UInt32(self.significandBitPattern & 0xFFFFFFFF00000 / 1048576)
+        return UInt32(self.significandBitPattern & 0xF_FF_FF_FF_F0_00_00 / 0x10_00_00) //1048576
     }
-    
+
     // Возвращает младшие 2 байта мантиссы
     func getLast16() -> UInt16 {
-        return UInt16(self.significandBitPattern & 0xFFFF)
+        return UInt16(self.significandBitPattern & 0xFF_FF)
+    }
+    
+    // Возвращает старшие 2 байта мантиссы
+    func getFirst16() -> UInt16 {
+        return UInt16(self.significandBitPattern & 0xF_FF_F0_00_00_00_00 / 0x10_00_00_00_00)
     }
     
     // - - A B

@@ -172,8 +172,16 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         delegate?.entropyManagerDidGetRawValues(values)
     }
     
+    func sourceUIKitDidGetRandomNumbers(_ numbers: [UInt32]) {
+        delegate?.entropyManagerDidGetRandomNumbers(numbers)
+    }
+    
     func sourceAVFoundationDidChangeRawValues(_ values: [Float]) {
         delegate?.entropyManagerDidGetRawValues(values)
+    }
+    
+    func sourceAVFoundationDidGetRandomNumbers(_ numbers: [UInt32]) {
+        delegate?.entropyManagerDidGetRandomNumbers(numbers)
     }
     
     func requestRandomNumbers(count: Int, for source: SourceEntropy) {
@@ -186,6 +194,10 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
             sourceCoreMotion.requestRandomNumbersFromGyroscope(count: count)
         case .Magnitometer:
             sourceCoreMotion.requestRandomNumbersFromMagnitometer(count: count)
+        case .Touches:
+            sourceUIKit.requestRandomNumbers(count: count)
+        case .Microphone:
+            sourceAVFoundation.requestRandomNumbers(count: count)
         default:
             break;
         }

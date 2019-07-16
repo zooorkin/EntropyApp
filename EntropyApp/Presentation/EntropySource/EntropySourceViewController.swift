@@ -13,6 +13,8 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     @IBOutlet weak var sourceView: TouchView!
     @IBOutlet weak var informationLabel: UILabel!
     @IBOutlet weak var PearsonTestResultLabel: UILabel!
+    @IBOutlet weak var countOfNumberSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var statisticsInformationLabel: UILabel!
     
     private let presentationAssembly: IPresentationAssembly
 
@@ -46,7 +48,11 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     @IBAction func pearsonTestAction(_ sender: Any) {
         let prevText = PearsonTestResultLabel.text ?? ""
         PearsonTestResultLabel.text = prevText + " [Обновляется]"
-        model.requestRandomNumbers(count: 100)
+        let count = Int(countOfNumberSegmentedControl
+            .titleForSegment(at: countOfNumberSegmentedControl.selectedSegmentIndex)!
+        )!
+        model.requestRandomNumbers(count: count)
+        
     }
     
     func entropySourceModelDidGetInformationFromSource(_ text: String) {
@@ -85,6 +91,55 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
         DispatchQueue.main.async {
             self.PearsonTestResultLabel.text = result
         }
+    }
+    
+    var expectation: String = "..."
+    var realExpectation: String = "..."
+    var varience: String = "..."
+    var realVarience: String = "..."
+    var expectationDiff: String = "..."
+    var varienceDiff: String = "..."
+    
+    private func updateStatisticsInformation(){
+        DispatchQueue.main.async {
+            self.statisticsInformationLabel.text =
+                "\(self.expectation) – выборочное среднее\n" +
+                "\(self.realExpectation) - теоретическое среднее\n" +
+                "\(self.varience) - выборочная дисперсия\n" +
+                "\(self.realVarience) - теоретическая дисперсия\n" +
+                "\(self.expectationDiff)% - смещение выборочного среднего\n" +
+                "\(self.varienceDiff)% - смещение дисперсии"
+        }
+    }
+    
+    func entropySourceModelDidGetExpectation(result: String) {
+        expectation = result
+        updateStatisticsInformation()
+    }
+    
+    func entropySourceModelDidGetRealExpectation(result: String) {
+        realExpectation = result
+        updateStatisticsInformation()
+    }
+    
+    func entropySourceModelDidGetVarience(result: String) {
+        varience = result
+        updateStatisticsInformation()
+    }
+    
+    func entropySourceModelDidGetRealVarience(result: String) {
+        realVarience = result
+        updateStatisticsInformation()
+    }
+    
+    func entropySourceModelDidGetVarienceDiff(result: String) {
+        varienceDiff = result
+        updateStatisticsInformation()
+    }
+    
+    func entropySourceModelDidGetExpectationDiff(result: String) {
+        expectationDiff = result
+        updateStatisticsInformation()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

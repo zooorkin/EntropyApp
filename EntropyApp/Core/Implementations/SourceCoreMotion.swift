@@ -172,7 +172,7 @@ class SourceCoreMotion: ISourceCoreMotion {
     func requestRandomNumbersFromMotion(count: Int) {
             DispatchQueue.global(qos: .utility).async {
             var numbers: [UInt32] = []
-            for _ in 0..<60{
+            while numbers.count < count {
                 if let data = self.motion.deviceMotion {
                     let x = data.attitude.roll
                     let y = data.attitude.pitch
@@ -181,7 +181,7 @@ class SourceCoreMotion: ISourceCoreMotion {
                 }
                 usleep(16667)
             }
-            while numbers.count != 100 {
+            while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
             }
             self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
@@ -191,16 +191,16 @@ class SourceCoreMotion: ISourceCoreMotion {
     func requestRandomNumbersFromAccelerometer(count: Int) {
             DispatchQueue.global(qos: .utility).async {
             var numbers: [UInt32] = []
-            for _ in 0..<60{
+            while numbers.count < count {
                 if let data = self.motion.accelerometerData {
                     let x = data.acceleration.x
                     let y = data.acceleration.y
                     let z = data.acceleration.z
-                    numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                    numbers += [x.getFirst32(), y.getFirst32(), z.getFirst32()]
                 }
                 usleep(16667)
             }
-            while numbers.count != 100 {
+            while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
             }
             self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
@@ -210,7 +210,7 @@ class SourceCoreMotion: ISourceCoreMotion {
     func requestRandomNumbersFromGyroscope(count: Int) {
         DispatchQueue.global(qos: .utility).async {
             var numbers: [UInt32] = []
-            for _ in 0..<60{
+            while numbers.count < count {
                 if let data = self.motion.gyroData {
                     let x = data.rotationRate.x
                     let y = data.rotationRate.y
@@ -219,7 +219,7 @@ class SourceCoreMotion: ISourceCoreMotion {
                 }
                 usleep(16667)
             }
-            while numbers.count != 100 {
+            while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
             }
             self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
@@ -229,16 +229,17 @@ class SourceCoreMotion: ISourceCoreMotion {
     func requestRandomNumbersFromMagnitometer(count: Int) {
         DispatchQueue.global(qos: .utility).async {
             var numbers: [UInt32] = []
-            for _ in 0..<60{
+            while numbers.count < count {
                 if let data = self.motion.magnetometerData {
                     let x = data.magneticField.x
                     let y = data.magneticField.y
-                    let z = data.magneticField.z
-                    numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                    // let z = data.magneticField.z
+                    numbers += [UInt32(x.getFirst16()) * 0xFFFF + UInt32(y.getFirst16())]
+                    // [x.getFirst32(), y.getFirst32(), z.getFirst32()]
                 }
                 usleep(16667)
             }
-            while numbers.count != 100 {
+            while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
             }
             self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
