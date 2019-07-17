@@ -84,17 +84,17 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         case .Touches:
             break;
         case .Motion:
-            sourceCoreMotion.startMotion()
+            self.sourceCoreMotion.startMotion()
         case .Accelerometer:
-            sourceCoreMotion.startAccelerometer()
+            self.sourceCoreMotion.startAccelerometer()
         case .Gyroscope:
-            sourceCoreMotion.startGyroscope()
+            self.sourceCoreMotion.startGyroscope()
         case .Magnitometer:
-            sourceCoreMotion.startMagnitometer()
+            self.sourceCoreMotion.startMagnitometer()
         case .Location:
-            sourceCoreLocation.startLocation()
+            self.sourceCoreLocation.startLocation()
         case .Microphone:
-            sourceAVFoundation.startMicrophone()
+            self.sourceAVFoundation.startMicrophone()
         case .Undefined:
             break;
         }

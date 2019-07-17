@@ -42,12 +42,10 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
         default:
             sourceView.isUserInteractionEnabled = false
         }
-        PearsonTestResultLabel.text = "Гипотеза о равномерном распределении..."
     }
 
     @IBAction func pearsonTestAction(_ sender: Any) {
-        let prevText = PearsonTestResultLabel.text ?? ""
-        PearsonTestResultLabel.text = prevText + " [Обновляется]"
+        PearsonTestResultLabel.text = "[Обновляется]"
         let count = Int(countOfNumberSegmentedControl
             .titleForSegment(at: countOfNumberSegmentedControl.selectedSegmentIndex)!
         )!
