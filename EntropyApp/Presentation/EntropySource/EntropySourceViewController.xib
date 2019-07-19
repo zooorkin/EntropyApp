@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EntropySourceViewController" customModule="EntropyApp" customModuleProvider="target">
             <connections>
                 <outlet property="PearsonTestResultLabel" destination="Kak-RH-ZeN" id="NhA-Hp-9Tm"/>
+                <outlet property="collectedNumbersLabel" destination="KVS-sa-nGG" id="dWc-Fz-2L0"/>
+                <outlet property="collectedNumbersProgressView" destination="4sK-KJ-4Ty" id="N8O-CH-bLK"/>
                 <outlet property="countOfNumberSegmentedControl" destination="htO-OF-HHe" id="9BL-QB-PIJ"/>
                 <outlet property="informationLabel" destination="cQU-sc-SPY" id="Cy8-Yq-mE8"/>
                 <outlet property="sourceView" destination="Ihi-dw-kzR" id="KQW-RJ-al8"/>
@@ -26,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ihi-dw-kzR" customClass="TouchView" customModule="EntropyApp" customModuleProvider="target">
-                    <rect key="frame" x="32" y="116" width="311" height="128"/>
+                    <rect key="frame" x="32" y="52" width="311" height="128"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch Area" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5w-6D-Q4w">
                             <rect key="frame" x="92.5" y="48" width="126" height="32"/>
@@ -43,52 +45,52 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSr-ME-eqs">
-                    <rect key="frame" x="0.0" y="276" width="375" height="391"/>
+                    <rect key="frame" x="0.0" y="212" width="375" height="455"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gLU-hh-YnE">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="391"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="455"/>
                             <subviews>
                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Bxz-GM-qwc">
-                                    <rect key="frame" x="32" y="0.0" width="311" height="194.5"/>
+                                    <rect key="frame" x="32" y="0.0" width="311" height="422.5"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kak-RH-ZeN">
-                                            <rect key="frame" x="0.0" y="34.5" width="311" height="13"/>
-                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="919-sN-ubk">
-                                            <rect key="frame" x="0.0" y="138.5" width="311" height="13"/>
-                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
+                                            <rect key="frame" x="0.0" y="335" width="311" height="14"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Размер выборки" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-Tu-yLg">
-                                            <rect key="frame" x="0.0" y="55.5" width="311" height="13.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выборка" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-Tu-yLg">
+                                            <rect key="frame" x="0.0" y="73.5" width="311" height="19.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Статистическая значения" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRt-ga-CIw">
-                                            <rect key="frame" x="0.0" y="117" width="311" height="13.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                            <rect key="frame" x="0.0" y="307.5" width="311" height="19.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Значения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nns-xx-voE">
-                                            <rect key="frame" x="0.0" y="159.5" width="311" height="14"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZC-yn-QZP">
+                                            <rect key="frame" x="0.0" y="27.5" width="311" height="14"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Описание" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u43-Wh-mwR">
+                                            <rect key="frame" x="0.0" y="0.0" width="311" height="19.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Гипотеза о равномерном распределений (критерий согласия Хи-квадрат)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmf-Ze-AFw">
-                                            <rect key="frame" x="0.0" y="0.0" width="311" height="26.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Гипотеза о равномерном распределении" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmf-Ze-AFw">
+                                            <rect key="frame" x="0.0" y="213" width="311" height="40.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nq7-7B-kbv">
-                                            <rect key="frame" x="0.0" y="77" width="311" height="32"/>
+                                            <rect key="frame" x="0.0" y="101" width="311" height="32"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="htO-OF-HHe">
                                                     <rect key="frame" x="0.0" y="0.0" width="137" height="33"/>
@@ -100,8 +102,8 @@
                                                     <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </segmentedControl>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxd-WG-f4i">
-                                                    <rect key="frame" x="233" y="0.0" width="78" height="32"/>
-                                                    <state key="normal" title="Проверить">
+                                                    <rect key="frame" x="249" y="0.0" width="62" height="32"/>
+                                                    <state key="normal" title="Выбрать">
                                                         <color key="titleColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
@@ -121,33 +123,67 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQU-sc-SPY">
-                                            <rect key="frame" x="0.0" y="181.5" width="311" height="13"/>
-                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="11"/>
+                                            <rect key="frame" x="0.0" y="408.5" width="311" height="14"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Собрано: ... / ..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVS-sa-nGG">
+                                            <rect key="frame" x="0.0" y="167" width="311" height="14"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4sK-KJ-4Ty">
+                                            <rect key="frame" x="0.0" y="149" width="311" height="2"/>
+                                            <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </progressView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Значения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nns-xx-voE">
+                                            <rect key="frame" x="0.0" y="381" width="311" height="19.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kak-RH-ZeN">
+                                            <rect key="frame" x="0.0" y="261.5" width="311" height="14"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="cQU-sc-SPY" secondAttribute="bottom" id="0Co-HZ-Cav"/>
+                                        <constraint firstItem="4sK-KJ-4Ty" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="7bz-D3-C9g"/>
                                         <constraint firstAttribute="trailing" secondItem="Nq7-7B-kbv" secondAttribute="trailing" id="7nH-DS-Sta"/>
                                         <constraint firstAttribute="trailing" secondItem="919-sN-ubk" secondAttribute="trailing" id="9MF-8h-BXA"/>
+                                        <constraint firstItem="DRt-ga-CIw" firstAttribute="top" secondItem="Kak-RH-ZeN" secondAttribute="bottom" constant="32" id="BoO-TB-9rL"/>
                                         <constraint firstAttribute="trailing" secondItem="lGd-Tu-yLg" secondAttribute="trailing" id="CZr-1h-pWf"/>
+                                        <constraint firstItem="KVS-sa-nGG" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="IbC-BZ-ogX"/>
+                                        <constraint firstAttribute="trailing" secondItem="u43-Wh-mwR" secondAttribute="trailing" id="IrZ-ka-53a"/>
+                                        <constraint firstItem="qmf-Ze-AFw" firstAttribute="top" secondItem="KVS-sa-nGG" secondAttribute="bottom" constant="32" id="J58-3I-7ve"/>
                                         <constraint firstItem="Kak-RH-ZeN" firstAttribute="top" secondItem="qmf-Ze-AFw" secondAttribute="bottom" constant="8" id="K3D-57-N64"/>
+                                        <constraint firstItem="WZC-yn-QZP" firstAttribute="top" secondItem="u43-Wh-mwR" secondAttribute="bottom" constant="8" id="OUT-Eg-Oj9"/>
                                         <constraint firstItem="cQU-sc-SPY" firstAttribute="top" secondItem="Nns-xx-voE" secondAttribute="bottom" constant="8" id="PKc-Xs-KfU"/>
-                                        <constraint firstItem="DRt-ga-CIw" firstAttribute="top" secondItem="Nq7-7B-kbv" secondAttribute="bottom" constant="8" id="Rih-Tm-YgZ"/>
                                         <constraint firstItem="Nq7-7B-kbv" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="Tda-91-nYE"/>
                                         <constraint firstItem="919-sN-ubk" firstAttribute="top" secondItem="DRt-ga-CIw" secondAttribute="bottom" constant="8" id="Tdb-ms-OVZ"/>
                                         <constraint firstItem="Kak-RH-ZeN" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="WzM-Di-BgH"/>
-                                        <constraint firstItem="qmf-Ze-AFw" firstAttribute="top" secondItem="Bxz-GM-qwc" secondAttribute="top" id="bGj-Nu-sme"/>
+                                        <constraint firstItem="KVS-sa-nGG" firstAttribute="top" secondItem="4sK-KJ-4Ty" secondAttribute="bottom" constant="16" id="Xpe-Un-x38"/>
+                                        <constraint firstAttribute="trailing" secondItem="4sK-KJ-4Ty" secondAttribute="trailing" id="Y2r-Gf-GkX"/>
+                                        <constraint firstItem="4sK-KJ-4Ty" firstAttribute="top" secondItem="Nq7-7B-kbv" secondAttribute="bottom" constant="16" id="avW-pj-bly"/>
+                                        <constraint firstAttribute="trailing" secondItem="KVS-sa-nGG" secondAttribute="trailing" id="cJh-Fl-jV5"/>
                                         <constraint firstItem="qmf-Ze-AFw" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="dqC-uf-joX"/>
+                                        <constraint firstItem="WZC-yn-QZP" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="dsi-Bp-Tlc"/>
+                                        <constraint firstAttribute="trailing" secondItem="WZC-yn-QZP" secondAttribute="trailing" id="fAS-j7-eOL"/>
                                         <constraint firstAttribute="trailing" secondItem="Kak-RH-ZeN" secondAttribute="trailing" id="fk6-qb-STF"/>
-                                        <constraint firstItem="Nns-xx-voE" firstAttribute="top" secondItem="919-sN-ubk" secondAttribute="bottom" constant="8" id="g1c-tJ-cR1"/>
+                                        <constraint firstItem="Nns-xx-voE" firstAttribute="top" secondItem="919-sN-ubk" secondAttribute="bottom" constant="32" id="g1c-tJ-cR1"/>
+                                        <constraint firstItem="u43-Wh-mwR" firstAttribute="top" secondItem="Bxz-GM-qwc" secondAttribute="top" id="jab-La-Jm3"/>
                                         <constraint firstItem="DRt-ga-CIw" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="jh2-zO-RRA"/>
                                         <constraint firstItem="lGd-Tu-yLg" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="jpX-aq-Usl"/>
-                                        <constraint firstItem="lGd-Tu-yLg" firstAttribute="top" secondItem="Kak-RH-ZeN" secondAttribute="bottom" constant="8" id="mz2-9M-qDb"/>
                                         <constraint firstAttribute="trailing" secondItem="cQU-sc-SPY" secondAttribute="trailing" id="nU6-Gj-7Cb"/>
                                         <constraint firstItem="Nq7-7B-kbv" firstAttribute="top" secondItem="lGd-Tu-yLg" secondAttribute="bottom" constant="8" id="oaJ-z4-KDO"/>
+                                        <constraint firstItem="u43-Wh-mwR" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="qdU-g9-E6E"/>
                                         <constraint firstItem="cQU-sc-SPY" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="sTH-fa-Nst"/>
+                                        <constraint firstItem="lGd-Tu-yLg" firstAttribute="top" secondItem="WZC-yn-QZP" secondAttribute="bottom" constant="32" id="t1s-3d-SIo"/>
                                         <constraint firstAttribute="trailing" secondItem="qmf-Ze-AFw" secondAttribute="trailing" id="t4y-jw-jkR"/>
                                         <constraint firstItem="919-sN-ubk" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="w6S-Kj-mPZ"/>
                                         <constraint firstItem="Nns-xx-voE" firstAttribute="leading" secondItem="Bxz-GM-qwc" secondAttribute="leading" id="weo-L5-EkI"/>
@@ -183,7 +219,7 @@
                 <constraint firstItem="hSr-ME-eqs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hHy-dD-6bb"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ihi-dw-kzR" secondAttribute="trailing" constant="32" id="iUr-QT-4gE"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="hSr-ME-eqs" secondAttribute="bottom" id="rfE-Uz-eqL"/>
-                <constraint firstItem="Ihi-dw-kzR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="96" id="xM5-dq-8yg"/>
+                <constraint firstItem="Ihi-dw-kzR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="32" id="xM5-dq-8yg"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="280.80000000000001" y="400.74962518740631"/>

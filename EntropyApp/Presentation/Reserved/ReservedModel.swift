@@ -28,23 +28,27 @@ class ReservedModel: IReservedModel, IEntropyManagerDelegate {
         self.entropyManager.delegate = self
     }
     
-    func entropyManagerDidGetInformationFromSource(_ text: String) {
+    func entropyManagerDidGetInformation(_ text: String, source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRawValues(_ values: [Double]) {
+    func entropyManagerDidGetRawValues(_ values: [Double], source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32]) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32], source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16], source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRawValues(_ values: [Float]) {
+    func entropyManagerDidGetRawValues(_ values: [Float], source: SourceEntropy) {
+        
+    }
+    
+    func entropyManagerDidCountRandomNumbers(_ count: Int, source: SourceEntropy) {
         
     }
     

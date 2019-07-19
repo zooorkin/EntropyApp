@@ -29,6 +29,7 @@ protocol IEntropySourceModelDelegate: class {
     func entropySourceModelDidGetRealVarience(result: String)
     func entropySourceModelDidGetVarienceDiff(result: String)
     func entropySourceModelDidGetExpectationDiff(result: String)
+    func entropySourceModelDidCountRandomNumbers(_ count: Int)
 }
 
 class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
@@ -55,13 +56,16 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
     deinit {
         print("Сервис \(source) останавливается...")
         entropyManager.stop(source: source)
+        print("entropyManager.stop(source: source) done")
     }
     
-    func entropyManagerDidGetInformationFromSource(_ text: String) {
+    func entropyManagerDidGetInformation(_ text: String, source: SourceEntropy) {
+        guard source == self.source else { return }
         delegate?.entropySourceModelDidGetInformationFromSource(text)
     }
     
-    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32]) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32], source: SourceEntropy) {
+        guard source == self.source else { return }
         delegate?.entropySourceModelDidGetRandomNumbers(numbers)
         delegate?.entropySourceModelDidGetPearsonTest(result: statistics.pearsonTest(numbers: numbers))
         let expectation = statistics.expectation(numbers: numbers)
@@ -78,17 +82,26 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
         delegate?.entropySourceModelDidGetVarienceDiff(result: String(variationDiff))
     }
     
-    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16], source: SourceEntropy) {
+        guard source == self.source else { return }
         delegate?.entropySourceModelDidGetRandomNumbers(numbers)
     }
     
-    func entropyManagerDidGetRawValues(_ values: [Double]) {
+    func entropyManagerDidGetRawValues(_ values: [Double], source: SourceEntropy) {
+        guard source == self.source else { return }
         delegate?.entropySourceModelDidGetRawValues(values)
     }
     
-    func entropyManagerDidGetRawValues(_ values: [Float]) {
+    func entropyManagerDidGetRawValues(_ values: [Float], source: SourceEntropy) {
+        guard source == self.source else { return }
         delegate?.entropySourceModelDidGetRawValues(values)
     }
+    
+    func entropyManagerDidCountRandomNumbers(_ count: Int, source: SourceEntropy) {
+        guard source == self.source else { return }
+        delegate?.entropySourceModelDidCountRandomNumbers(count)
+    }
+    
     
     func touches(touches: Set<UITouch>, with event: UIEvent?) {
         entropyManager.touches(touches: touches, with: event)

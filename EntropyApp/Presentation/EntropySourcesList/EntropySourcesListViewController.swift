@@ -47,6 +47,11 @@ class EntropySourcesListViewController: UITableViewController, IEntropySourcesLi
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "EntropyListCell")
         cell.textLabel?.text = model.sourceEntropyName(at: indexPath.row)
+        let isEnabled = model.sourceEntropyIsEnabled(at: indexPath.row)
+        cell.isUserInteractionEnabled = isEnabled
+        if !isEnabled {
+            cell.textLabel?.textColor = .lightGray
+        }
         return cell
     }
     

@@ -21,6 +21,7 @@ protocol ISourceUIKit {
 protocol ISourceUIKitDelegate {
     func sourceUIKitDidChangeRawValues(_ values: [Double])
     func sourceUIKitDidGetRandomNumbers(_ numbers: [UInt32])
+    func sourceUIKitDidCountRandomNumbers(_ count: Int)
 }
 
 
@@ -37,11 +38,13 @@ class SourceUIKit: ISourceUIKit {
             if let requiredCount = requiredCountOfRandomNumbers {
                 randomNumbers += [UInt32(x.getFirst16()) * 0xFFFF + UInt32(y.getFirst16())]
                 //randomNumbers += [x.getFirst32(), y.getFirst32()]
+                delegate?.sourceUIKitDidCountRandomNumbers(randomNumbers.count)
                 if randomNumbers.count >= requiredCount {
                     while randomNumbers.count > requiredCount {
                         randomNumbers.remove(at: randomNumbers.count - 1)
                     }
                     delegate?.sourceUIKitDidGetRandomNumbers(randomNumbers)
+                    delegate?.sourceUIKitDidCountRandomNumbers(randomNumbers.count)
                     requiredCountOfRandomNumbers = nil
                     randomNumbers = []
                 }

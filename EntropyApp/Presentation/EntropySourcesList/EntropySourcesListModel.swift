@@ -13,6 +13,7 @@ protocol IEntropySourcesListModel {
     var numberOfRows: Int {get}
     func sourceEntropyName(at index: Int) -> String
     func sourceEntropy(at index: Int) -> SourceEntropy
+    func sourceEntropyIsEnabled(at index: Int) -> Bool
 }
 
 protocol IEntropySourcesListModelDelegate: class {
@@ -47,23 +48,34 @@ class EntropySourcesListModel: IEntropySourcesListModel, IEntropyManagerDelegate
         fatalError("Неправильный индекс")
     }
     
-    func entropyManagerDidGetInformationFromSource(_ text: String) {
+    func sourceEntropyIsEnabled(at index: Int) -> Bool {
+        if (index >= 0 && index < numberOfRows){
+            return entropyManager.sourceEntropyIsEnabled(at: index)
+        }
+        fatalError("Неправильный индекс")
+    }
+    
+    func entropyManagerDidGetInformation(_ text: String, source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRawValues(_ values: [Double]) {
+    func entropyManagerDidGetRawValues(_ values: [Double], source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32]) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt32], source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16]) {
+    func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16], source: SourceEntropy) {
         
     }
     
-    func entropyManagerDidGetRawValues(_ values: [Float]) {
+    func entropyManagerDidGetRawValues(_ values: [Float], source: SourceEntropy) {
+        
+    }
+    
+    func entropyManagerDidCountRandomNumbers(_ count: Int, source: SourceEntropy) {
         
     }
 

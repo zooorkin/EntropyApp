@@ -10,6 +10,8 @@ import UIKit
 
 class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate {
 
+    @IBOutlet weak var collectedNumbersProgressView: UIProgressView!
+    @IBOutlet weak var collectedNumbersLabel: UILabel!
     @IBOutlet weak var sourceView: TouchView!
     @IBOutlet weak var informationLabel: UILabel!
     @IBOutlet weak var PearsonTestResultLabel: UILabel!
@@ -24,13 +26,13 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     init(presentationAssembly: IPresentationAssembly, model: IEntropySourceModel) {
         self.presentationAssembly = presentationAssembly
         self.model = model
+        self.countOfRandomNumbers = 0
         super.init(nibName: "EntropySourceViewController", bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,19 +44,24 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
         default:
             sourceView.isUserInteractionEnabled = false
         }
+        collectedNumbersProgressView.progress = 0
     }
+    
+    var countOfRandomNumbers: Int
 
     @IBAction func pearsonTestAction(_ sender: Any) {
         PearsonTestResultLabel.text = "[Обновляется]"
-        let count = Int(countOfNumberSegmentedControl
-            .titleForSegment(at: countOfNumberSegmentedControl.selectedSegmentIndex)!
-        )!
-        model.requestRandomNumbers(count: count)
+        countOfRandomNumbers = Int(
+            countOfNumberSegmentedControl.titleForSegment(at: countOfNumberSegmentedControl.selectedSegmentIndex)!)!
+        model.requestRandomNumbers(count: countOfRandomNumbers)
+        collectedNumbersLabel.text = "Собрано: \(0) / \(countOfRandomNumbers)"
+        collectedNumbersProgressView.progress = 0
         
     }
     
     func entropySourceModelDidGetInformationFromSource(_ text: String) {
         DispatchQueue.main.async {
+            [unowned self] in
             self.informationLabel.text = text
         }
     }
@@ -77,6 +84,7 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
             raw += prolog + "\(i)" + epilog
         }
         DispatchQueue.main.async {
+            [unowned self] in
             self.informationLabel.text = binary + "\n" + raw
         }
     }
@@ -87,6 +95,7 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     
     func entropySourceModelDidGetPearsonTest(result: String) {
         DispatchQueue.main.async {
+            [unowned self] in
             self.PearsonTestResultLabel.text = result
         }
     }
@@ -100,6 +109,7 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     
     private func updateStatisticsInformation(){
         DispatchQueue.main.async {
+            [unowned self] in
             self.statisticsInformationLabel.text =
                 "\(self.expectation) – выборочное среднее\n" +
                 "\(self.realExpectation) - теоретическое среднее\n" +
@@ -138,6 +148,14 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     func entropySourceModelDidGetExpectationDiff(result: String) {
         expectationDiff = result
         updateStatisticsInformation()
+    }
+    
+    func entropySourceModelDidCountRandomNumbers(_ count: Int) {
+        DispatchQueue.main.async {
+            [unowned self] in
+            self.collectedNumbersLabel.text = "Собрано: \(count) / \(self.countOfRandomNumbers)"
+            self.collectedNumbersProgressView.progress = Float(count) / Float(self.countOfRandomNumbers)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

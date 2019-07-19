@@ -38,12 +38,20 @@ protocol ISourceCoreMotion {
 
 
 protocol ISourceCoreMotionDelegate: class {
-    func sourceCoreMotionDidChangeRawValues(_ values: [Double])
-    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt32])
-    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt16])
+    func sourceCoreMotionDidChangeRawValues(_ values: [Double], source: SourceMotion)
+    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt32], source: SourceMotion)
+    func sourceCoreMotionDidGetRandomNumbers(_ numbers: [UInt16], source: SourceMotion)
+    func sourceCoreMotionDidCountRandomNumbers(_ count: Int, source: SourceMotion)
 }
 
 import CoreMotion
+
+enum SourceMotion {
+    case Accelerometer
+    case Gyroscope
+    case Magnitometer
+    case Motion
+}
 
 class SourceCoreMotion: ISourceCoreMotion {
 
@@ -57,7 +65,6 @@ class SourceCoreMotion: ISourceCoreMotion {
     }
     
     func startMotion() {
-        print("startMotion...")
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0 / 60.0
             self.motion.showsDeviceMovementDisplay = true
@@ -138,7 +145,7 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.rotationRate.x
             let y = data.rotationRate.y
             let z = data.rotationRate.z
-            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z], source: .Gyroscope)
         }
     }
     
@@ -147,7 +154,7 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.magneticField.x
             let y = data.magneticField.y
             let z = data.magneticField.z
-            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z], source: .Magnitometer)
         }
     }
     
@@ -156,7 +163,7 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.acceleration.x
             let y = data.acceleration.y
             let z = data.acceleration.z
-            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z], source: .Accelerometer)
         }
     }
     
@@ -165,7 +172,7 @@ class SourceCoreMotion: ISourceCoreMotion {
             let x = data.attitude.roll
             let y = data.attitude.pitch
             let z = data.attitude.yaw
-            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z])
+            delegate?.sourceCoreMotionDidChangeRawValues([x, y, z], source: .Motion)
         }
     }
     
@@ -178,13 +185,16 @@ class SourceCoreMotion: ISourceCoreMotion {
                     let y = data.attitude.pitch
                     let z = data.attitude.yaw
                     numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                    self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Motion)
                 }
                 usleep(16667)
             }
             while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
+                self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Motion)
             }
-            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers, source: .Motion)
+            self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Motion)
         }
     }
     
@@ -197,13 +207,16 @@ class SourceCoreMotion: ISourceCoreMotion {
                     let y = data.acceleration.y
                     let z = data.acceleration.z
                     numbers += [x.getFirst32(), y.getFirst32(), z.getFirst32()]
+                    self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Accelerometer)
                 }
                 usleep(16667)
             }
             while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
+                self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Accelerometer)
             }
-            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers, source: .Accelerometer)
+            self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Accelerometer)
         }
     }
     
@@ -216,13 +229,16 @@ class SourceCoreMotion: ISourceCoreMotion {
                     let y = data.rotationRate.y
                     let z = data.rotationRate.z
                     numbers += [x.getLast32(), y.getLast32(), z.getLast32()]
+                    self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Gyroscope)
                 }
                 usleep(16667)
             }
             while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
+                self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Gyroscope)
             }
-            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers, source: .Gyroscope)
+            self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Gyroscope)
         }
     }
     
@@ -236,13 +252,16 @@ class SourceCoreMotion: ISourceCoreMotion {
                     // let z = data.magneticField.z
                     numbers += [UInt32(x.getFirst16()) * 0xFFFF + UInt32(y.getFirst16())]
                     // [x.getFirst32(), y.getFirst32(), z.getFirst32()]
+                    self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Magnitometer)
                 }
                 usleep(16667)
             }
             while numbers.count != count {
                 numbers.remove(at: numbers.count - 1)
+                self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Magnitometer)
             }
-            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers)
+            self.delegate?.sourceCoreMotionDidGetRandomNumbers(numbers, source: .Magnitometer)
+            self.delegate?.sourceCoreMotionDidCountRandomNumbers(numbers.count, source: .Magnitometer)
         }
     }
 

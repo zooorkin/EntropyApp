@@ -25,7 +25,7 @@ protocol ISourceAVFoundationDelegate {
     
     func sourceAVFoundationDidChangeRawValues(_ values: [Float])
     func sourceAVFoundationDidGetRandomNumbers(_ numbers: [UInt32])
-
+    func sourceAVFoundationDidCountRandomNumbers(_ count: Int)
 }
 
 
@@ -46,7 +46,7 @@ class SourceAVFoundation: ISourceAVFoundation {
                                         (buffer: AVAudioPCMBuffer, audioTime  : AVAudioTime) in
                                         if let pointer = buffer.floatChannelData?.pointee {
                                             var array = [Float]()
-                                            for i in 0..<20 {
+                                            for i in 0..<10 {
                                                 let x = pointer.advanced(by: 2*i).pointee
                                                 let y = pointer.advanced(by: 2*i+1).pointee
                                                 array.append(x)
@@ -73,11 +73,13 @@ class SourceAVFoundation: ISourceAVFoundation {
     private func addRandomNumbers(x: Double, y: Double){
         if let requiredCount = requiredCountOfRandomNumbers {
             randomNumbers += [UInt32(x.getFirst16()) * 0xFFFF + UInt32(y.getFirst16())]
+            delegate?.sourceAVFoundationDidCountRandomNumbers(randomNumbers.count)
             if randomNumbers.count >= requiredCount {
                 while randomNumbers.count > requiredCount {
                     randomNumbers.remove(at: randomNumbers.count - 1)
                 }
                 delegate?.sourceAVFoundationDidGetRandomNumbers(randomNumbers)
+                delegate?.sourceAVFoundationDidCountRandomNumbers(randomNumbers.count)
                 requiredCountOfRandomNumbers = nil
                 randomNumbers = []
             }
