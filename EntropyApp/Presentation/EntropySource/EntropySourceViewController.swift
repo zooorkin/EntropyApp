@@ -10,6 +10,7 @@ import UIKit
 
 class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate {
 
+    @IBOutlet weak var numbersTextView: UITextView!
     @IBOutlet weak var collectedNumbersProgressView: UIProgressView!
     @IBOutlet weak var collectedNumbersLabel: UILabel!
     @IBOutlet weak var sourceView: TouchView!
@@ -45,6 +46,7 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
             sourceView.isUserInteractionEnabled = false
         }
         collectedNumbersProgressView.progress = 0
+        numbersTextView.text = ""
     }
     
     var countOfRandomNumbers: Int
@@ -67,7 +69,14 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
     }
     
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt32]) {
-        
+        var s = ""
+        for each in numbers {
+            s += String(each) + " "
+        }
+        print(s)
+        DispatchQueue.main.async {
+            self.numbersTextView.text += s + "\n"
+        }
     }
     
     func entropySourceModelDidGetRandomNumbers(_ numbers: [UInt16]) {
@@ -117,36 +126,43 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
                 "\(self.realVarience) - теоретическая дисперсия\n" +
                 "\(self.expectationDiff)% - смещение выборочного среднего\n" +
                 "\(self.varienceDiff)% - смещение дисперсии"
+            let s = "\n\(self.expectation) " +
+                "\(self.realExpectation) " +
+                "\(self.varience) " +
+                "\(self.realVarience) " +
+                "\(self.expectationDiff) " +
+            "\(self.varienceDiff)\n"
+            
+            print(s)
+            self.numbersTextView.text += s + "\n"
         }
     }
     
     func entropySourceModelDidGetExpectation(result: String) {
         expectation = result
-        updateStatisticsInformation()
     }
     
     func entropySourceModelDidGetRealExpectation(result: String) {
         realExpectation = result
-        updateStatisticsInformation()
     }
     
     func entropySourceModelDidGetVarience(result: String) {
         varience = result
-        updateStatisticsInformation()
     }
     
     func entropySourceModelDidGetRealVarience(result: String) {
         realVarience = result
-        updateStatisticsInformation()
     }
     
     func entropySourceModelDidGetVarienceDiff(result: String) {
         varienceDiff = result
-        updateStatisticsInformation()
     }
     
     func entropySourceModelDidGetExpectationDiff(result: String) {
         expectationDiff = result
+    }
+    
+    func entropySourceModelDidEnd() {
         updateStatisticsInformation()
     }
     

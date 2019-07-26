@@ -29,6 +29,7 @@ protocol IEntropySourceModelDelegate: class {
     func entropySourceModelDidGetRealVarience(result: String)
     func entropySourceModelDidGetVarienceDiff(result: String)
     func entropySourceModelDidGetExpectationDiff(result: String)
+    func entropySourceModelDidEnd()
     func entropySourceModelDidCountRandomNumbers(_ count: Int)
 }
 
@@ -80,6 +81,7 @@ class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
         delegate?.entropySourceModelDidGetRealVarience(result: String(realVarience))
         delegate?.entropySourceModelDidGetExpectationDiff(result: String(expectationDiff))
         delegate?.entropySourceModelDidGetVarienceDiff(result: String(variationDiff))
+        delegate?.entropySourceModelDidEnd()
     }
     
     func entropyManagerDidGetRandomNumbers(_ numbers: [UInt16], source: SourceEntropy) {
