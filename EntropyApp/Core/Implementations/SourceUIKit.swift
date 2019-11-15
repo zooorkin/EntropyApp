@@ -26,6 +26,10 @@ protocol ISourceUIKitDelegate {
 
 
 class SourceUIKit: ISourceUIKit {
+    
+    var sourceName: String = "Foundation"
+    
+    var sourceDescription: String = "unknown"
 
     var delegate: ISourceUIKitDelegate?
     

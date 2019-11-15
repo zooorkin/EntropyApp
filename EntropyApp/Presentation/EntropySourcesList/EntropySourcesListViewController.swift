@@ -56,10 +56,9 @@ class EntropySourcesListViewController: UITableViewController, IEntropySourcesLi
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            let source = model.sourceEntropy(at: indexPath.row)
+        let source = model.sourceEntropy(at: indexPath.row)
         let entropySourceViewController = presentationAssembly.entropySourceViewController(source: source)
-            entropySourceViewController.title = model.sourceEntropyName(at: indexPath.row)
-            self.navigationController?.pushViewController(entropySourceViewController, animated: true)
+        self.navigationController?.pushViewController(entropySourceViewController, animated: true)
     }
 
 }

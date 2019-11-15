@@ -36,8 +36,14 @@ protocol IEntropyManagerDelegate: class {
     func entropyManagerDidCountRandomNumbers(_ count: Int, source: SourceEntropy)
 }
 
+protocol ISourceEntropy {
+    
+    var sourceName: String { get }
+    var sourceDescription: String { get }
+}
 
 enum SourceEntropy {
+    
     case Touches
     case Location
     case Altimeter
@@ -141,17 +147,14 @@ class EntropyManager: IEntropyManager, ISourceFoundationDelegate, ISourceUIKitDe
         self.sourceAVFoundation = sourceAVFoundation
         self.sourceDispatch = sourceDispatch
         self.sourceReserved = sourceReserved
-        self.entropyList = [(sourceEntropy: .Undefined, name: "Время", enabled: false),
-                            (sourceEntropy: .Touches, name: "Прикосновение", enabled: true),
-                            (sourceEntropy: .Location, name: "Географическое местоположение", enabled: true),
-                            (sourceEntropy: .Altimeter, name: "Альтиметр", enabled: true),
-                            (sourceEntropy: .Motion, name: "Положение в пространстве", enabled: true),
-                            (sourceEntropy: .Accelerometer, name: "Акселерометр", enabled: true),
-                            (sourceEntropy: .Gyroscope, name: "Гироскоп", enabled: true),
-                            (sourceEntropy: .Magnitometer, name: "Магнитометр", enabled: true),
-                            (sourceEntropy: .Microphone, name: "Микрофон", enabled: true),
-                            (sourceEntropy: .Undefined, name: "Камера", enabled: false),
-                            (sourceEntropy: .Undefined, name: "Многопоточность", enabled: false)]
+        var entropyList: [(sourceEntropy: SourceEntropy, name: String, enabled: Bool)] = []
+        entropyList += [(sourceEntropy: .Undefined, name: "Время", enabled: false)]
+        for source in [SourceEntropy.Touches, .Location, .Altimeter, .Motion, .Accelerometer, .Gyroscope, .Magnitometer, .Microphone] {
+            entropyList += [ (sourceEntropy: source, name: source.sourceName, enabled: true)]
+        }
+        entropyList += [(sourceEntropy: .Undefined, name: "Камера", enabled: false),
+                        (sourceEntropy: .Undefined, name: "Многопоточность", enabled: false)]
+        self.entropyList = entropyList
         self.sourceFoundation.delegate = self
         self.sourceUIKit.delegate = self
         self.sourceCoreLocation.delegate = self

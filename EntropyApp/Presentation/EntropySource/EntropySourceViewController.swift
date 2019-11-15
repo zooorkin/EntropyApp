@@ -10,6 +10,7 @@ import UIKit
 
 class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate {
 
+    @IBOutlet weak var sourceDescriptionLabel: UILabel!
     @IBOutlet weak var numbersTextView: UITextView!
     @IBOutlet weak var collectedNumbersProgressView: UIProgressView!
     @IBOutlet weak var collectedNumbersLabel: UILabel!
@@ -47,6 +48,8 @@ class EntropySourceViewController: UIViewController, IEntropySourceModelDelegate
         }
         collectedNumbersProgressView.progress = 0
         numbersTextView.text = ""
+        title = model.sourceName
+        sourceDescriptionLabel.text = model.sourceDescription
     }
     
     var countOfRandomNumbers: Int

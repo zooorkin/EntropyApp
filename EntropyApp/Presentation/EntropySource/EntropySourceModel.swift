@@ -9,7 +9,9 @@
 import UIKit
 
 protocol IEntropySourceModel: ITouchDelegate {
-
+    
+    var sourceName: String { get }
+    var sourceDescription: String { get }
     var delegate: IEntropySourceModelDelegate? { get set }
     var source: SourceEntropy {get}
     func touches(touches: Set<UITouch>, with event: UIEvent?)
@@ -35,7 +37,15 @@ protocol IEntropySourceModelDelegate: class {
 
 class EntropySourceModel: IEntropySourceModel, IEntropyManagerDelegate {
     
-
+    
+    var sourceName: String {
+        return source.sourceName
+    }
+    
+    var sourceDescription: String {
+        return source.sourceDescription
+    }
+    
     weak var delegate: IEntropySourceModelDelegate?
     
     private var entropyManager: IEntropyManager

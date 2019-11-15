@@ -18,6 +18,7 @@
                 <outlet property="countOfNumberSegmentedControl" destination="htO-OF-HHe" id="9BL-QB-PIJ"/>
                 <outlet property="informationLabel" destination="cQU-sc-SPY" id="Cy8-Yq-mE8"/>
                 <outlet property="numbersTextView" destination="ctD-JZ-gtM" id="oI3-87-v1v"/>
+                <outlet property="sourceDescriptionLabel" destination="WZC-yn-QZP" id="vyy-6B-Qz1"/>
                 <outlet property="sourceView" destination="Ihi-dw-kzR" id="KQW-RJ-al8"/>
                 <outlet property="statisticsInformationLabel" destination="919-sN-ubk" id="Ejy-tG-Uu8"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bZv-Qa-Qab"/>
@@ -103,8 +104,8 @@
                                                     <color key="tintColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </segmentedControl>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxd-WG-f4i">
-                                                    <rect key="frame" x="249" y="0.0" width="62" height="32"/>
-                                                    <state key="normal" title="Выбрать">
+                                                    <rect key="frame" x="260" y="0.0" width="51" height="32"/>
+                                                    <state key="normal" title="Начать">
                                                         <color key="titleColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
